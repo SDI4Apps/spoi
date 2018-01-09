@@ -1,0 +1,29 @@
+{
+  "name": "spoi",
+  "version": "1.0.0",
+  "description": "Points of interest map",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDI4Apps/spoi.git"
+  },
+  "keywords": [
+    "poi",
+    "spoi",
+    "tourism",
+    "linked",
+    "data"
+  ],
+  "author": "bosc, ccss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDI4Apps/spoi/issues"
+  },
+  "homepage": "https://github.com/SDI4Apps/spoi#readme",
+  "dependencies": {
+    "hslayers-ng": "^0.5.4"
+  }
+}
