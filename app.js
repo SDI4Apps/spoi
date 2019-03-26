@@ -190,6 +190,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sid
         })
 
         var geoJsonFormat = new ol.format.GeoJSON;
+
         module.value('config', {
             search_provider: ['sdi4apps_openapi', 'geonames'],
             box_layers: [base_layer_group, tourist_layer_group, weather_layer_group],
@@ -197,6 +198,22 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sid
                 layer_ix: 2,
                 attributes: ["http://gis.zcu.cz/poi#category_osm"]
             }],
+            default_layers: [
+                new ol.layer.Vector({
+                    title: "All POIs (slow)",
+                    source: new SparqlJson({
+                        geom_attribute: '?geom',
+                        url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('SELECT ?o ?p ?s FROM <http://www.sdi4apps.eu/poi.rdf> WHERE { ?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?sub. ?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false). ') + '<extent>' + encodeURIComponent('	?o ?p ?s } ORDER BY ?o') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
+                        projection: 'EPSG:3857',
+                        strategy: function(extent, resolution) {
+                            var tmp = [extent[0], extent[1], extent[2], extent[3]];
+                            return [tmp];
+                        }
+                    }),
+                    visible: false,
+                    path: 'Points of interest'
+                })
+            ],
             default_view: new ol.View({
                 center: [1490321.6967438285, 6400602.013496143], //Latitude longitude    to Spherical Mercator
                 zoom: 14,

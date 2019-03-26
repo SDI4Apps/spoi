@@ -22,7 +22,8 @@ module.exports = function(grunt) {
                 options: {
                     mangle: {
                         reserved: ['angular', '$', 'ol', 'define', 'Api']
-                    }
+                    },
+                    sourceMap: true
                 },
                 files: [{
                     expand: true,
