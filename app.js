@@ -1,12 +1,13 @@
 'use strict';
 
-define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'measure', 'legend', 'bootstrap', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'info', 'trip_planner', 'spoi_editor', 'upload'],
+define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'print', 'measure', 'legend', 'bootstrap.bundle', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'trip_planner', 'spoi_editor', 'upload'],
 
     function(angular, ol, toolbar, layermanager, SparqlJson) {
         var module = angular.module('hs', [
             'hs.sidebar',
             'hs.toolbar',
             'hs.layermanager',
+            'hs.print',
             'hs.map',
             'hs.query',
             'hs.search', 'hs.permalink', 'hs.measure',
@@ -16,7 +17,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
             'hs.ows',
             'gettext',
             'hs.compositions',
-             'hs.trip_planner',
+            'hs.trip_planner',
             'spoi_editor',
             'hs.upload'
         ]);
@@ -30,7 +31,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 }
             };
         }]);
-        
+
         module.directive('hs.advancedInfopanelDirective', function() {
             return {
                 templateUrl: 'advanced_info.html?bust=' + gitsha,
@@ -40,7 +41,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
             };
         });
 
-        
+
         module.directive('hs.pointPopupDirective', function() {
             return {
                 templateUrl: 'pointpopup.html?bust=' + gitsha,
@@ -53,11 +54,10 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                             duration: 250
                         }
                     });
-                    scope.addPopupToMap();
                 }
             };
         });
-         
+
         var style = function(feature, resolution) {
             if (typeof feature.get('visible') === 'undefined' || feature.get('visible') == true) {
                 var s = feature.get('http://www.sdi4apps.eu/poi/#mainCategory');
@@ -108,7 +108,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 })
             })]
         };
-        
+
         var base_layer_group = new ol.layer.Group({
             'img': 'osm.png',
             title: 'Base layer',
@@ -149,13 +149,13 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 })
             ],
         });
-        
+
         var tourist_layer_group = new ol.layer.Group({
             title: 'Touristic',
             'img': 'POIs.png',
             layers: []
         });
-        
+
         var weather_layer_group = new ol.layer.Group({
             'img': 'partly_cloudy.png',
             title: 'Weather',
@@ -202,11 +202,11 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 zoom: 14,
                 units: "m"
             }),
-            infopanel_template: hsl_path + 'examples/geosparql/infopanel.html'
+            infopanel_template: 'infopanel.html'
         });
 
-        module.controller('Main', ['$scope', '$compile', '$filter', 'Core', 'hs.map.service', '$sce', '$http', 'config', 'hs.trip_planner.service', 'hs.permalink.service_url', 'hs.utils.service', 'spoi_editor', 'hs.query.baseService',
-            function($scope, $compile, $filter, Core, OlMap, $sce, $http, config, trip_planner_service, permalink, utils, spoi_editor, queryService) {
+        module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core', 'hs.map.service', '$sce', '$http', 'config', 'hs.trip_planner.service', 'hs.permalink.urlService', 'hs.utils.service', 'spoi_editor', 'hs.query.baseService',
+            function($scope, $rootScope, $compile, $filter, Core, OlMap, $sce, $http, config, trip_planner_service, permalink, utils, spoi_editor, queryService) {
                 if (console) console.log("Main called");
                 $scope.hsl_path = hsl_path; //Get this from hslayers.js file
                 $scope.Core = Core;
@@ -233,18 +233,23 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 var el = angular.element('<div hs.point_popup_directive></div>');
                 $("#hs-dialog-area").append(el)
                 $compile(el)($scope);
-                
+
                 //Which ever comes first - map.laoded event or popup directives link function - add the overlay.
-                function addPopupToMap(){
-                    if(angular.isDefined($scope.popup) && angular.isUndefined($scope.popup.added)) {
+                function addPopupToMap() {
+                    if (angular.isDefined($scope.popup) && angular.isUndefined($scope.popup.added)) {
                         OlMap.map.addOverlay($scope.popup);
                         $scope.popup.added = true;
                     }
                 }
-                
+
                 $scope.addPopupToMap = addPopupToMap;
-                
-                $scope.$on('map.loaded', $scope.addPopupToMap);
+
+                if (angular.isDefined(OlMap.map)) {
+                    $scope.addPopupToMap();
+                } else {
+                    $rootScope.$on('map.loaded', $scope.addPopupToMap);
+                }
+
 
                 var show_location_weather = true;
                 $scope.$on('queryClicked', function(event, data) {
@@ -256,10 +261,9 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                     if (on_features) return;
                     getWeatherInfo(data.coordinate);
                     getCountryAtCoordinate(data.coordinate);
-                    console.log(OlMap.map.getView().getResolution());
                 });
-                
-                function getWeatherInfo(coordinate){
+
+                function getWeatherInfo(coordinate) {
                     var lon_lat = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
                     $scope.lon_lat = lon_lat;
                     var url = utils.proxify("http://api.openweathermap.org/data/2.5/weather?APPID=13b627424cd072290defed4216e92baa&lat=" + lon_lat[1] + "&lon=" + lon_lat[0]);
@@ -272,20 +276,20 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                         createLayerSelectorForNewPoi(coordinate);
                         if (response.data.weather) {
                             $scope.weather_info = response.data;
-                            $scope.weather_info.date_row =  $filter('date')(new Date(response.data.dt * 1000), 'dd.MM.yyyy HH:mm');
+                            $scope.weather_info.date_row = $filter('date')(new Date(response.data.dt * 1000), 'dd.MM.yyyy HH:mm');
                             $scope.weather_info.temp_row = (response.data.main.temp - 273.15).toFixed(1);
                         } else {
                             $scope.weather_info = null;
                         }
-                    });   
+                    });
                 }
-        
-                $scope.hidePopup = function(){
+
+                $scope.hidePopup = function() {
                     $scope.popup.setPosition(undefined);
                     return false;
                 }
-                
-                $scope.addToTrip = function(){
+
+                $scope.addToTrip = function() {
                     trip_planner_service.addWaypoint($scope.lon_lat[0], $scope.lon_lat[1]);
                     Core.setMainPanel('trip_planner');
                     return false;
@@ -307,7 +311,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                             angular.element('#hs-spoi-country-placeholder').html($scope.country_last_clicked.country);
                         });
                 }
-                
+
                 function layerSelected() {
                     var layer = $(this).data('layer');
                     var feature = spoi_editor.addPoi(layer, $(this).data('coordinate'), $scope.country_last_clicked, $(this).data('sub_category'));
@@ -315,7 +319,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                     $scope.$broadcast('infopanel.feature_select', feature);
                     return false;
                 }
-                
+
                 $scope.$on('infopanel.feature_selected', function(event, feature) {
                     $scope.lon_lat = ol.proj.transform(feature.getGeometry().flatCoordinates, 'EPSG:3857', 'EPSG:4326');
                     spoi_editor.id = feature.get('http://purl.org/dc/elements/1.1/identifier');
@@ -330,16 +334,16 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                             possible_layers.push(layer);
                             var $li = $('<li><a href="#">' + layer.get('title') + '</a></li>');
                             var category = layer.get('category');
-                            if (angular.isDefined(spoi_editor.getCategoryHierarchy()[category])){
+                            if (angular.isDefined(spoi_editor.getCategoryHierarchy()[category])) {
                                 //Was main category
                                 $li.addClass('dropdown-submenu');
                                 var $ul = $('<ul></ul>');
                                 $ul.addClass('dropdown-menu');
                                 $li.append($ul);
-                                if($('.hs-spoi-new-poi').offset().left+331 > $('div[hs]').width()-$('.panelspace').width()){
+                                if ($('.hs-spoi-new-poi').offset().left + 331 > $('div[hs]').width() - $('.panelspace').width()) {
                                     $ul.addClass('to_left');
                                 }
-                                $li.click(function(){
+                                $li.click(function() {
                                     $('.dropdown-submenu .dropdown-menu').hide();
                                     $ul.show();
                                 })
@@ -358,7 +362,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                                 $li.data('coordinate', coordinate);
                                 $li.click(layerSelected);
                             }
-                            
+
                             angular.element("#hs-spoi-new-layer-list").append($li);
                         }
                     });
@@ -379,25 +383,29 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
 
                 spoi_editor.init();
                 var hr_mappings;
-                var list_loaded = {dynamic_categories: false, static_categories: false};
-                function checkListLoaded(){
-                    if(list_loaded.dynamic_categories && list_loaded.static_categories){
-                        if(console) console.info('Load spoi layers');
-                        OlMap.reset();
+                var list_loaded = {
+                    dynamic_categories: false,
+                    static_categories: false
+                };
+
+                function checkListLoaded() {
+                    if (list_loaded.dynamic_categories && list_loaded.static_categories) {
+                        if (console) console.info('Load spoi layers');
+                        if (OlMap.map) OlMap.reset();
                     }
                 }
-                 var q = encodeURIComponent('SELECT DISTINCT ?main ?label ?subs ?sublabel FROM <http://www.sdi4apps.eu/poi_categories.rdf> WHERE {?subs <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?main. ?main <http://www.w3.org/2000/01/rdf-schema#label> ?label. ?subs <http://www.w3.org/2000/01/rdf-schema#label> ?sublabel} ORDER BY ?main ');  
+                var q = encodeURIComponent('SELECT DISTINCT ?main ?label ?subs ?sublabel FROM <http://www.sdi4apps.eu/poi_categories.rdf> WHERE {?subs <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?main. ?main <http://www.w3.org/2000/01/rdf-schema#label> ?label. ?subs <http://www.w3.org/2000/01/rdf-schema#label> ?sublabel} ORDER BY ?main ');
 
-                 $http({
+                $http({
                     method: 'GET',
                     url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + q + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
                     cache: false
                 }).then(function successCallback(response) {
                     var last_main_category = '';
-                    angular.forEach(response.data.results.bindings, function(x){
+                    angular.forEach(response.data.results.bindings, function(x) {
                         var category = x.main.value;
                         spoi_editor.registerCategory(x.main.value, x.label.value, x.subs.value, x.sublabel.value);
-                        if (category != last_main_category){
+                        if (category != last_main_category) {
                             last_main_category = category;
                             var name = x.label.value.capitalizeFirstLetter();
                             var new_lyr = new ol.layer.Vector({
@@ -410,7 +418,7 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                                     category: category,
                                     projection: 'EPSG:3857',
                                     extend_with_attribs: spoi_editor.getFriendlyAttribs()
-                                        //feature_loaded: function(feature){feature.set('hstemplate', 'hs.geosparql_directive')}
+                                    //feature_loaded: function(feature){feature.set('hstemplate', 'hs.geosparql_directive')}
                                 }),
                                 style: style,
                                 visible: false,
@@ -424,8 +432,8 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                     list_loaded.dynamic_categories = true;
                     checkListLoaded();
                 })
-                
-                
+
+
                 $http({
                     method: 'GET',
                     url: 'data.json',
@@ -457,44 +465,44 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                     list_loaded.static_categories = true;
                     checkListLoaded();
                 })
-                
-                function getMaxResolution(category){
+
+                function getMaxResolution(category) {
                     var default_res = 38;
                     //console.log(category);
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#transportation')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#transportation')
                         default_res = 4;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#other')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#other')
                         default_res = 19;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#outdoor')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#outdoor')
                         default_res = 160;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#car_service')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#car_service')
                         default_res = 20;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#natural_feature')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#natural_feature')
                         default_res = 160;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#camp_site')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#camp_site')
                         default_res = 310;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#lodging')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#lodging')
                         default_res = 160;
-                    if(category == 'http://gis.zcu.cz/SPOI/Ontology#information')
+                    if (category == 'http://gis.zcu.cz/SPOI/Ontology#information')
                         default_res = 160;
-                    
+
                     return default_res;
                 }
-                
-                $scope.showDeveloperInfo = function(){
+
+                $scope.showDeveloperInfo = function() {
                     $("#hs-dialog-area #advanced-info-dialog").remove();
                     var el = angular.element('<div hs.advanced_infopanel_directive></div>');
                     $("#hs-dialog-area").append(el)
                     $compile(el)($scope);
                 }
-                
-                $scope.attributeEditorMode = function(attribute){
-                    if($scope.editTextboxVisible(attribute)) return 1;
-                    else if($sce.valueOf(attribute.value).indexOf('http')==-1)  return 2;
-                    else if($sce.valueOf(attribute.value).indexOf('http')>-1)  return 3;
+
+                $scope.attributeEditorMode = function(attribute) {
+                    if ($scope.editTextboxVisible(attribute)) return 1;
+                    else if ($sce.valueOf(attribute.value).indexOf('http') == -1) return 2;
+                    else if ($sce.valueOf(attribute.value).indexOf('http') > -1) return 3;
                 }
-                
-                $scope.toggleUploadPhoto = function(){
+
+                $scope.toggleUploadPhoto = function() {
                     $scope.upload_visible = !$scope.upload_visible;
                 }
 
@@ -510,15 +518,15 @@ define(['angular', 'ol', 'toolbar', 'layermanager', 'SparqlJson', 'sidebar', 'ma
                 $scope.editCategoryDropdownVisible = spoi_editor.editCategoryDropdownVisible;
                 $scope.getSpoiDropdownItems = spoi_editor.getSpoiDropdownItems;
                 $scope.getNotEditableAttrs = spoi_editor.getNotEditableAttrs;
-                
+
                 $scope.$on('sidebar_change', function(event, expanded) {
                     queryService.enabled = expanded;
                 })
-                
-                function splitAddress(url){
+
+                function splitAddress(url) {
                     return url.split('#')[1];
                 }
-                
+
                 $scope.splitAddress = splitAddress;
 
             }

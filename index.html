@@ -14,7 +14,8 @@
 <body >
     <div hs ng-app="hs" ng-controller="Main" style="position: relative;"></div>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/requirejs/require.js"></script>        
+    <script>var hsl_path = './node_modules/hslayers-ng/'; var gitsha = '1';</script>
+    <script src="bundle.min.js"></script>    
     <script>
         var script = document.createElement('script');
         script.src = 'hslayers.js?r='+Math.random();
