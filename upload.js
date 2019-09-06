@@ -1,9 +1,9 @@
 /**
  * @namespace uploader
  */
-define(['angular', 'core', 'demo.min', 'dmuploader', 'spoi_editor'],
+define(['core', 'demo.min', 'dmuploader', 'spoi_editor'],
 
-    function(angular) {
+    function() {
         angular.module('hs.upload', ['hs.core', 'spoi_editor'])
 
             .directive('hs.upload.directive', ['Core', 'hs.utils.service', '$http', 'spoi_editor',
