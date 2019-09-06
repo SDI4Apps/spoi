@@ -25,6 +25,7 @@ import { Style, Icon, Stroke, Fill, Circle, Text } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
 import { Vector as VectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
+import Overlay from 'ol/Overlay';
 
 //define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'print', 'measure', 'legend', 'bootstrap.bundle', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'trip_planner', 'spoi_editor', 'upload'],
 
@@ -38,9 +39,8 @@ var module = angular.module('hs', [
     'hs.query',
     'hs.search', 'hs.permalink', 'hs.measure',
     'hs.geolocation', 'hs.core',
-    'hs.status_creator',
-    'hs.api',
-    'hs.ows',
+    'hs.save-map',
+    'hs.addLayers',
     'gettext',
     'hs.compositions',
     'hs.trip_planner',
@@ -251,7 +251,6 @@ module.value('config', {
 module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core', 'hs.map.service', '$sce', '$http', 'config', 'hs.trip_planner.service', 'hs.permalink.urlService', 'hs.utils.service', 'spoi_editor', 'hs.query.baseService',
     function ($scope, $rootScope, $compile, $filter, Core, OlMap, $sce, $http, config, trip_planner_service, permalink, utils, spoi_editor, queryService) {
         if (console) console.log("Main called");
-        $scope.hsl_path = hsl_path; //Get this from hslayers.js file
         $scope.Core = Core;
 
         Core.panelEnabled('compositions', false);
