@@ -1,4 +1,4 @@
-{
+export default {
 	"popular_categories": {
 		"http://gis.zcu.cz/SPOI/Ontology#atm": "ATM",
 		"http://gis.zcu.cz/SPOI/Ontology#bank": "Bank",

@@ -26,6 +26,7 @@ import VectorLayer from 'ol/layer/Vector';
 import { Vector as VectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
 import Overlay from 'ol/Overlay';
+import hr_mappings from 'human-readable-names';
 
 //define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'print', 'measure', 'legend', 'bootstrap.bundle', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'trip_planner', 'spoi_editor', 'upload'],
 
@@ -424,7 +425,6 @@ module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core'
         });*/
 
         spoi_editor.init();
-        var hr_mappings;
         var list_loaded = {
             dynamic_categories: false,
             static_categories: false
@@ -474,39 +474,32 @@ module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core'
             list_loaded.dynamic_categories = true;
             checkListLoaded();
         })
-
-
-        $http({
-            method: 'GET',
-            url: 'data.json',
-            cache: false
-        }).then(function successCallback(response) {
-            var hr_mappings = response.data;
-            spoi_editor.extendMappings(hr_mappings);
-            angular.forEach(hr_mappings.popular_categories, function (name, category) {
-                spoi_editor.registerCategory(null, null, category, name);
-                var new_lyr = new VectorLayer({
-                    title: " " + name,
-                    source: new SparqlJson({
-                        geom_attribute: '?geom',
-                        url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('SELECT ?o ?p ?s FROM <http://www.sdi4apps.eu/poi.rdf> FROM <http://www.sdi4apps.eu/poi_changes.rdf> FROM <http://www.sdi4apps.eu/poi_categories.rdf> WHERE { ?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <' + category + '>. ?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false). ') + '<extent>' + encodeURIComponent('?o ?p ?s } ORDER BY ?o') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
-                        updates_url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('SELECT ?o ?date ?attr ?value FROM <http://www.sdi4apps.eu/poi.rdf> FROM <http://www.sdi4apps.eu/poi_categories.rdf> FROM <http://www.sdi4apps.eu/poi_changes.rdf> WHERE { ?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <' + category + '>. ?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false).') + '<extent>' + encodeURIComponent(' ?o <http://purl.org/dc/elements/1.1/identifier> ?id. ?c <http://www.sdi4apps.eu/poi_changes/poi_id> ?id. ?c <http://purl.org/dc/terms/1.1/created> ?date. ?c <http://www.sdi4apps.eu/poi_changes/attribute_set> ?attr_set. ?attr_set ?attr ?value } ORDER BY ?o ?date ?attr ?value') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
-                        category_field: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
-                        category: category,
-                        projection: 'EPSG:3857',
-                        extend_with_attribs: spoi_editor.getFriendlyAttribs()
-                    }),
-                    style: styleOSM,
-                    visible: false,
-                    path: 'Popular Categories',
-                    maxResolution: getMaxResolution(category),
-                    category: category
-                });
-                tourist_layer_group.getLayers().insertAt(0, new_lyr);
-            })
-            list_loaded.static_categories = true;
-            checkListLoaded();
+       
+        spoi_editor.extendMappings(hr_mappings);
+        angular.forEach(hr_mappings.popular_categories, function (name, category) {
+            spoi_editor.registerCategory(null, null, category, name);
+            var new_lyr = new VectorLayer({
+                title: " " + name,
+                source: new SparqlJson({
+                    geom_attribute: '?geom',
+                    url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('SELECT ?o ?p ?s FROM <http://www.sdi4apps.eu/poi.rdf> FROM <http://www.sdi4apps.eu/poi_changes.rdf> FROM <http://www.sdi4apps.eu/poi_categories.rdf> WHERE { ?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <' + category + '>. ?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false). ') + '<extent>' + encodeURIComponent('?o ?p ?s } ORDER BY ?o') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
+                    updates_url: 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('SELECT ?o ?date ?attr ?value FROM <http://www.sdi4apps.eu/poi.rdf> FROM <http://www.sdi4apps.eu/poi_categories.rdf> FROM <http://www.sdi4apps.eu/poi_changes.rdf> WHERE { ?o <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <' + category + '>. ?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false).') + '<extent>' + encodeURIComponent(' ?o <http://purl.org/dc/elements/1.1/identifier> ?id. ?c <http://www.sdi4apps.eu/poi_changes/poi_id> ?id. ?c <http://purl.org/dc/terms/1.1/created> ?date. ?c <http://www.sdi4apps.eu/poi_changes/attribute_set> ?attr_set. ?attr_set ?attr ?value } ORDER BY ?o ?date ?attr ?value') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
+                    category_field: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
+                    category: category,
+                    projection: 'EPSG:3857',
+                    extend_with_attribs: spoi_editor.getFriendlyAttribs()
+                }),
+                style: styleOSM,
+                visible: false,
+                path: 'Popular Categories',
+                maxResolution: getMaxResolution(category),
+                category: category
+            });
+            tourist_layer_group.getLayers().insertAt(0, new_lyr);
         })
+        list_loaded.static_categories = true;
+
+        checkListLoaded();
 
         function getMaxResolution(category) {
             var default_res = 38;
