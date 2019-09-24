@@ -95,7 +95,7 @@ var style = function (feature, resolution) {
             new Style({
                 image: new Icon({
                     anchor: [0.5, 1],
-                    src: 'symbolsWaze/' + s + '.png',
+                    src: '../symbolsWaze/' + s + '.png',
                     size: [30, 35],
                     crossOrigin: 'anonymous'
                 })
@@ -116,7 +116,7 @@ var styleOSM = function (feature, resolution) {
             new Style({
                 image: new Icon({
                     anchor: [0.5, 1],
-                    src: 'symbols/' + s + '.png',
+                    src: '../symbols/' + s + '.png',
                     size: [30, 35],
                     crossOrigin: 'anonymous'
                 })
@@ -474,7 +474,7 @@ module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core'
             list_loaded.dynamic_categories = true;
             checkListLoaded();
         })
-       
+
         spoi_editor.extendMappings(hr_mappings);
         angular.forEach(hr_mappings.popular_categories, function (name, category) {
             spoi_editor.registerCategory(null, null, category, name);
@@ -568,4 +568,3 @@ module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core'
 ]).filter('usrFrSpoiAttribs', ['spoi_editor', function (spoi_editor) {
     return spoi_editor.filterAttribs;
 }]);
-
