@@ -3,4 +3,4 @@ bundle.js
 bundle.min.js
 bundle.min.js.map
 static
-./index.html
+index.html
