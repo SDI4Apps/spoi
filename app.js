@@ -87,6 +87,7 @@ module.directive('hs.pointPopupDirective', function () {
 
 const symbols = {
     car_service: require('symbolsWaze/car_service.png'),
+    bank: require('symbols/bank.png'),
     atm: require('symbols/atm.png'),
     cafe: require('symbols/cafe.png'),
     fast_food: require('symbols/fast_food.png'),

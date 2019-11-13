@@ -20,7 +20,7 @@ module.exports = {
     // Path where bundled files will be output
     path: path.resolve(__dirname, './static'),
     // Path at which output assets will be served
-    publicPath: ''
+    publicPath: 'static/'
   },
   // Just for build speed improvement
   resolve: { symlinks: true,
@@ -34,7 +34,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       // Path where the file will be generated (appended to output.path)
-      filename: 'index.html',
+      filename: '../index.html',
       template: 'src/index.html',
       // We manually inject css and js files in our template
       inject: false
