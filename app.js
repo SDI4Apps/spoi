@@ -85,6 +85,19 @@ module.directive('hs.pointPopupDirective', function () {
     };
 });
 
+const symbols = {
+    car_service: require('symbolsWaze/car_service.png'),
+    atm: require('symbols/atm.png'),
+    cafe: require('symbols/cafe.png'),
+    fast_food: require('symbols/fast_food.png'),
+    pub: require('symbols/pub.png'),
+    restaurant: require('symbols/restaurant.png'),
+    hotel: require('symbols/hotel.png'),
+    supermarket: require('symbols/supermarket.png'),
+    information: require('symbols/information.png'),
+    camp_site: require('symbols/camp_site.png')
+}
+
 var style = function (feature, resolution) {
     if (typeof feature.get('visible') === 'undefined' || feature.get('visible') == true) {
         var s = feature.get('http://www.sdi4apps.eu/poi/#mainCategory');
@@ -95,7 +108,7 @@ var style = function (feature, resolution) {
             new Style({
                 image: new Icon({
                     anchor: [0.5, 1],
-                    src: '../symbolsWaze/' + s + '.png',
+                    src: symbols[s],
                     size: [30, 35],
                     crossOrigin: 'anonymous'
                 })
@@ -116,7 +129,7 @@ var styleOSM = function (feature, resolution) {
             new Style({
                 image: new Icon({
                     anchor: [0.5, 1],
-                    src: '../symbols/' + s + '.png',
+                    src: symbols[s],
                     size: [30, 35],
                     crossOrigin: 'anonymous'
                 })
