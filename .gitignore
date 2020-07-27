@@ -4,3 +4,6 @@ bundle.min.js
 bundle.min.js.map
 static
 index.html
+.tern-project
+*.bat
+*.cmd
