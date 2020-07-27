@@ -1,12 +1,15 @@
+import 'dmuploader';
+import 'demo.min';
+
 /**
  * @namespace uploader
  */
-define(['core', 'demo.min', 'dmuploader', 'spoi_editor'],
+//define(['core', 'demo.min', 'dmuploader', 'spoi_editor'],
 
-    function() {
+//    function() {
         angular.module('hs.upload', ['hs.core', 'spoi_editor'])
 
-            .directive('hs.upload.directive', ['Core', 'hs.utils.service', '$http', 'spoi_editor',
+            .directive('hs.upload.directive', ['HsCore', 'HsUtilsService', '$http', 'spoi_editor',
                 function(Core, utils, $http, spoi_editor) {
                     return {
                         templateUrl: 'upload.html',
@@ -73,4 +76,4 @@ define(['core', 'demo.min', 'dmuploader', 'spoi_editor'],
                     };
                 }
             ])
-    })
+    //})
