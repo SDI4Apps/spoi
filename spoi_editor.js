@@ -4,7 +4,7 @@ import angular from 'angular';
  */
 angular.module('spoi_editor', ['hs.core'])
 
-    .service("spoi_editor", ['Core', 'hs.utils.service', '$sce', 'hs.query.baseService', '$http',
+    .service("spoi_editor", ['HsCore', 'HsUtilsService', '$sce', 'HsQueryBaseService', '$http',
         function (Core, utils, $sce, queryService, $http) {
             var hr_mappings = {};
             //Atributes which are displayed without clicking 'For developer' button

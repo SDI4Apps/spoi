@@ -28,63 +28,6 @@ import { GeoJSON } from 'ol/format';
 import Overlay from 'ol/Overlay';
 import hr_mappings from 'human-readable-names';
 
-//define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'print', 'measure', 'legend', 'bootstrap.bundle', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'trip_planner', 'spoi_editor', 'upload'],
-
-//function(angular, ol, toolbar, layermanager, SparqlJson) {
-var module = angular.module('hs', [
-    'hs.sidebar',
-    'hs.toolbar',
-    'hs.layermanager',
-    'hs.print',
-    'hs.map',
-    'hs.query',
-    'hs.search', 'hs.permalink', 'hs.measure',
-    'hs.geolocation', 'hs.core',
-    'hs.save-map',
-    'hs.addLayers',
-    'gettext',
-    'hs.compositions',
-    'hs.trip_planner',
-    'spoi_editor',
-    'hs.upload'
-]);
-
-module.directive('hs', ['Core', function (Core) {
-    return {
-        template: Core.hslayersNgTemplate,
-        link: function (scope, element) {
-            Core.fullScreenMap(element);
-            Core.setMainPanel('layermanager');
-        }
-    };
-}]);
-
-module.directive('hs.advancedInfopanelDirective', function () {
-    return {
-        template: require('advanced_info.html'),
-        link: function (scope, element, attrs) {
-            $('#advanced-info-dialog').modal('show');
-        }
-    };
-});
-
-
-module.directive('hs.pointPopupDirective', function () {
-    return {
-        template: require('pointpopup.html'),
-        link: function (scope, element, attrs) {
-            var container = document.getElementById('popup');
-            scope.popup = new Overlay({
-                element: container,
-                autoPan: true,
-                autoPanAnimation: {
-                    duration: 250
-                }
-            });
-        }
-    };
-});
-
 const symbols = {
     car_service: require('symbolsWaze/car_service.png'),
     bank: require('symbols/bank.png'),
@@ -174,7 +117,7 @@ var base_layer_group = new Group({
             title: "MTBMap",
             visible: false,
             base: true,
-            source: new XYZ({
+            source: new OSM({ // For some reason XYZ() does not work here
                 url: 'http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png'
             }),
             path: 'Roads'
@@ -183,7 +126,7 @@ var base_layer_group = new Group({
             title: "OwnTiles",
             visible: false,
             base: true,
-            source: new XYZ({
+            source: new OSM({ // For some reason XYZ() does not work here
                 url: 'http://ct37.sdi4apps.eu/map/{z}/{x}/{y}.png'
             }),
             path: 'Roads'
@@ -202,7 +145,7 @@ var weather_layer_group = new Group({
     title: 'Weather',
     layers: [new Tile({
         title: "OpenWeatherMap cloud cover",
-        source: new XYZ({
+        source: new OSM({ // For some reason XYZ() does not work here
             url: "http://{a-c}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa"
         }),
         visible: false,
@@ -211,7 +154,7 @@ var weather_layer_group = new Group({
     }),
     new Tile({
         title: "OpenWeatherMap precipitation",
-        source: new XYZ({
+        source: new OSM({ // For some reason XYZ() does not work here
             url: "http://{a-c}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa"
         }),
         visible: false,
@@ -220,7 +163,7 @@ var weather_layer_group = new Group({
     }),
     new Tile({
         title: "OpenWeatherMap temperature",
-        source: new XYZ({
+        source: new OSM({ // For some reason XYZ() does not work here
             url: "http://{a-c}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa"
         }),
         visible: false,
@@ -232,7 +175,59 @@ var weather_layer_group = new Group({
 
 var geoJsonFormat = new GeoJSON;
 
-module.value('config', {
+//define(['angular', 'ol', 'toolbar', 'layermanager', 'hs.source.SparqlJson', 'sidebar', 'map', 'ows', 'query', 'search', 'permalink', 'print', 'measure', 'legend', 'bootstrap.bundle', 'geolocation', 'core', 'datasource_selector', 'api', 'angular-gettext', 'translations', 'compositions', 'status_creator', 'trip_planner', 'spoi_editor', 'upload'],
+
+//function(angular, ol, toolbar, layermanager, SparqlJson) {
+angular.module('hs', [
+    'hs.sidebar',
+    'hs.toolbar',
+    'hs.layermanager',
+    'hs.print',
+    'hs.map',
+    'hs.query',
+    'hs.search', 'hs.permalink', 'hs.measure',
+    'hs.geolocation', 'hs.core',
+    'hs.save-map',
+    'hs.addLayers',
+    'gettext',
+    'hs.compositions',
+    'hs.trip_planner',
+    'spoi_editor',
+    'hs.upload'
+])
+.directive('hs', ['HsCore', function (Core) {
+    return {
+        template: Core.hslayersNgTemplate,
+        link: function (scope, element) {
+            Core.fullScreenMap(element);
+            Core.setMainPanel('layermanager');
+        }
+    };
+}])
+.directive('hs.advancedInfopanelDirective', function () {
+    return {
+        template: require('advanced_info.html'),
+        link: function (scope, element, attrs) {
+            $('#advanced-info-dialog').modal('show');
+        }
+    };
+})
+.directive('hs.pointPopupDirective', function () {
+    return {
+        template: require('pointpopup.html'),
+        link: function (scope, element, attrs) {
+            var container = document.getElementById('popup');
+            scope.popup = new Overlay({
+                element: container,
+                autoPan: true,
+                autoPanAnimation: {
+                    duration: 250
+                }
+            });
+        }
+    };
+})
+.value('HsConfig', {
     search_provider: ['sdi4apps_openapi', 'geonames'],
     box_layers: [base_layer_group, tourist_layer_group, weather_layer_group],
     crossfilterable_layers: [{
@@ -261,9 +256,8 @@ module.value('config', {
         units: "m"
     }),
     infopanel_template: 'infopanel.html'
-});
-
-module.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'Core', 'hs.map.service', '$sce', '$http', 'config', 'hs.trip_planner.service', 'hs.permalink.urlService', 'hs.utils.service', 'spoi_editor', 'hs.query.baseService',
+})
+.controller('Main', ['$scope', '$rootScope', '$compile', '$filter', 'HsCore', 'HsMapService', '$sce', '$http', 'HsConfig', 'HsTripPlannerService', 'HsPermalinkUrlService', 'HsUtilsService', 'spoi_editor', 'HsQueryBaseService',
     function ($scope, $rootScope, $compile, $filter, Core, OlMap, $sce, $http, config, trip_planner_service, permalink, utils, spoi_editor, queryService) {
         if (console) console.log("Main called");
         $scope.Core = Core;
