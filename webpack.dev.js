@@ -33,10 +33,12 @@ module.exports = merge(common, {
   output: {
     // see https://webpack.js.org/guides/build-performance#output-without-path-info
     pathinfo: false,
+    // Path where bundled files will be output
+    path: path.resolve(__dirname, './static'),
     filename: '[name].bundle.js'
   },
   devServer: {
-    contentBase: './static',
+    contentBase: path.resolve(__dirname, './static'),
     hot: false,
     host: '0.0.0.0',
     port: env.HTTP_PORT || 8082
@@ -79,7 +81,7 @@ module.exports = merge(common, {
       {
         type: 'javascript/auto',
         test: /\.json$/,
-        include: path.resolve(__dirname, 'assets/locales'),
+        include: path.resolve(__dirname, './src/assets/locales'),
         use: [
           {
             loader: 'file-loader',

@@ -25,7 +25,11 @@ module.exports = merge(common, {
   devtool: 'source-map',
   output: {
     // Add a chunkhash to file name so it will not be cached by browsers when content changed
-    filename: '[name].[hash].bundle.js'
+    filename: '[name].[hash].bundle.js',
+    // Path where bundled files will be output
+    path: path.resolve(__dirname, './build'),
+    // Path at which output assets will be served
+    publicPath: 'build/',
   },
   resolve: {
     symlinks: true
@@ -99,7 +103,7 @@ module.exports = merge(common, {
       {
         test: /\.json$/,
         type: 'javascript/auto',
-        include: path.resolve(__dirname, 'assets/locales'),
+        include: path.resolve(__dirname, 'src/assets/locales'),
         use: [
           {
             loader: 'file-loader',

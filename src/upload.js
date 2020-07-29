@@ -1,5 +1,5 @@
-import 'dmuploader';
-import 'demo.min';
+import './dmuploader';
+import './demo.min';
 
 /**
  * @namespace uploader
