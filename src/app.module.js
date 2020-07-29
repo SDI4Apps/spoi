@@ -223,12 +223,13 @@ angular
   ])
   .directive('hs', [
     'HsCore',
-    function (Core) {
+    'HsLayoutService',
+    function (Core, HsLayoutService) {
       return {
         template: Core.hslayersNgTemplate,
         link: function (scope, element) {
-          Core.fullScreenMap(element);
-          Core.setMainPanel('layermanager');
+          HsLayoutService.fullScreenMap(element, Core);
+          HsLayoutService.setMainPanel('layermanager');
         },
       };
     },
@@ -236,6 +237,11 @@ angular
   .directive('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)
   .directive('hs.pointPopupDirective', PointPopupComponent)
   .value('HsConfig', {
+    panelsEnabled: {
+      composition_browser: false,
+      datasource_selector: false,
+      saveMap: false,
+    },
     search_provider: ['sdi4apps_openapi', 'geonames'],
     box_layers: [base_layer_group, tourist_layer_group, weather_layer_group],
     crossfilterable_layers: [
@@ -289,6 +295,7 @@ angular
     'HsUtilsService',
     'spoi_editor',
     'HsQueryBaseService',
+    'HsLayoutService',
     function (
       $scope,
       $rootScope,
@@ -303,16 +310,13 @@ angular
       permalink,
       utils,
       spoi_editor,
-      queryService
+      queryService,
+      HsLayoutService
     ) {
       if (console) {
         //console.log('Main called');
       }
       $scope.Core = Core;
-
-      Core.panelEnabled('compositions', false);
-      Core.panelEnabled('ows', false);
-      Core.panelEnabled('status_creator', false);
       $scope.queryData = queryService.data;
 
       $scope.$on('scope_loaded', (event, args, arg2) => {
@@ -410,7 +414,7 @@ angular
 
       $scope.addToTrip = function () {
         trip_planner_service.addWaypoint($scope.lon_lat[0], $scope.lon_lat[1]);
-        Core.setMainPanel('trip_planner');
+        HsLayoutService.setMainPanel('trip_planner');
         return false;
       };
 
@@ -468,7 +472,7 @@ angular
         spoi_editor.id = feature.get(
           'http://purl.org/dc/elements/1.1/identifier'
         );
-        Core.setMainPanel('info', false);
+        HsLayoutService.setMainPanel('info', false);
       });
 
       function createLayerSelectorForNewPoi(coordinate) {
