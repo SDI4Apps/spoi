@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const hslPaths = require(path.join(__dirname, './node_modules/hslayers-ng/common_paths'));
 
 module.exports = {
-  entry: { main: './src/app.js' },
+  entry: { main: './src/app.module.js' },
   output: {
     // Path at which output assets will be served
     publicPath: ''
