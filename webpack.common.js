@@ -35,8 +35,8 @@ module.exports = {
       filename: '../index.html',
       template: './src/index.html',
       // We manually inject css and js files in our template
-      inject: false
-      // favicon: 'assets/img/favicon.ico'
+      inject: false,
+      favicon: './img/favicon.ico'
     })
   ],
   module: {
