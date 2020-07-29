@@ -1,8 +1,8 @@
 'use strict';
 import angular from 'angular';
-import 'geosparql.css';
-import 'spoi_editor';
-import 'upload';
+import './geosparql.css';
+import './spoi_editor';
+import './upload';
 import 'trip_planner';
 import 'toolbar.module';
 import 'print.module';
@@ -26,7 +26,7 @@ import VectorLayer from 'ol/layer/Vector';
 import { Vector as VectorSource } from 'ol/source';
 import { GeoJSON } from 'ol/format';
 import Overlay from 'ol/Overlay';
-import hr_mappings from 'human-readable-names';
+import hr_mappings from './human-readable-names';
 
 const symbols = {
     car_service: require('symbolsWaze/car_service.png'),
@@ -206,7 +206,7 @@ angular.module('hs', [
 }])
 .directive('hs.advancedInfopanelDirective', function () {
     return {
-        template: require('advanced_info.html'),
+        template: require('./advanced_info.html'),
         link: function (scope, element, attrs) {
             $('#advanced-info-dialog').modal('show');
         }
@@ -214,7 +214,7 @@ angular.module('hs', [
 })
 .directive('hs.pointPopupDirective', function () {
     return {
-        template: require('pointpopup.html'),
+        template: require('./pointpopup.html'),
         link: function (scope, element, attrs) {
             var container = document.getElementById('popup');
             scope.popup = new Overlay({
