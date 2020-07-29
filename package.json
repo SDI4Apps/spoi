@@ -8,7 +8,7 @@
     "build": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config ./webpack.prod.js --progress",
     "build-dev": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config ./webpack.dev.js --progress",
     "start": "http-server ./ -p 8080",
-    "start-dev": "webpack-dev-server --config ./webpack.dev.js --watch"
+    "start-dev": "webpack-dev-server --config ./webpack.dev.js --progress --watch"
   },
   "repository": {
     "type": "git",
