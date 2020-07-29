@@ -38,10 +38,10 @@ module.exports = merge(common, {
     filename: '[name].bundle.js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, './static'),
+    contentBase: path.resolve(__dirname),
     hot: false,
     host: '0.0.0.0',
-    port: env.HTTP_PORT || 8082
+    port: env.HTTP_PORT || 8080
   },
   module: {
     rules: [
@@ -72,7 +72,7 @@ module.exports = merge(common, {
       },
       // Load images as URLs
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|ico)$/,
         use: {
           loader: 'url-loader'
         }
