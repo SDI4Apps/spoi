@@ -221,19 +221,16 @@ angular
     'spoi_editor',
     'hs.upload',
   ])
-  .directive('hs', [
-    'HsCore',
-    'HsLayoutService',
-    function (Core, HsLayoutService) {
-      return {
-        template: Core.hslayersNgTemplate,
-        link: function (scope, element) {
-          HsLayoutService.fullScreenMap(element, Core);
-          HsLayoutService.setMainPanel('layermanager');
-        },
-      };
-    },
-  ])
+  .directive('hs', (HsCore, HsLayoutService) => {
+    'ngInject';
+    return {
+      template: HsCore.hslayersNgTemplate,
+      link: function (scope, element) {
+        HsLayoutService.fullScreenMap(element, HsCore);
+        HsLayoutService.setMainPanel('layermanager');
+      },
+    };
+  })
   .directive('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)
   .directive('hs.pointPopupDirective', PointPopupComponent)
   .value('HsConfig', {
