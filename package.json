@@ -4,7 +4,11 @@
   "description": "Points of interest map",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config ./webpack.prod.js --progress",
+    "build-dev": "node node_modules/hslayers-ng/scripts/bootstrap-isolate.js && webpack --config ./webpack.dev.js --progress",
+    "start": "http-server ./ -p 8080",
+    "start-dev": "webpack-dev-server --config ./webpack.dev.js --watch"
   },
   "repository": {
     "type": "git",
@@ -14,8 +18,7 @@
     "poi",
     "spoi",
     "tourism",
-    "linked",
-    "data"
+    "linked data"
   ],
   "author": "bosc, ccss",
   "license": "ISC",
