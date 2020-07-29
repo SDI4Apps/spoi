@@ -1,7 +1,7 @@
 'use strict';
 import './geosparql.css';
-import './spoi_editor';
-import './upload';
+import './spoiEditor/spoiEditor.module';
+import './upload/upload.module';
 import 'add-layers.module';
 import 'datasource-selector.module';
 import 'draw.module';
