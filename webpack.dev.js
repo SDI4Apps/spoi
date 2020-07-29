@@ -10,7 +10,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
-const webpack = require('webpack');
 const env = process.env;
 
 module.exports = merge(common, {
@@ -18,47 +17,49 @@ module.exports = merge(common, {
   devtool: 'cheap-eval-source-map',
   watchOptions: {
     aggregateTimeout: 300,
-    poll: 1000
+    poll: 1000,
   },
   resolve: {
-    symlinks: true
+    symlinks: true,
   },
   optimization: {
     // see https://webpack.js.org/guides/build-performance#avoid-extra-optimization-steps
     removeAvailableModules: false,
     removeEmptyChunks: false,
     // In dev mode we simply want to get a big bundle containing all our js
-    splitChunks: false
+    splitChunks: false,
   },
   output: {
     // see https://webpack.js.org/guides/build-performance#output-without-path-info
     pathinfo: false,
     // Path where bundled files will be output
     path: path.resolve(__dirname, './static'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
   devServer: {
     contentBase: path.resolve(__dirname),
     hot: false,
     host: '0.0.0.0',
-    port: env.HTTP_PORT || 8080
+    port: env.HTTP_PORT || 8080,
   },
   module: {
     rules: [
       // Load css files which will be injected in html page at startup <style>...</style>)
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/'
-          }
-        }]
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
       },
       // Load angularJS partials HTML file as URL
       {
@@ -67,15 +68,15 @@ module.exports = merge(common, {
         use: [
           'ng-cache-loader?prefix=[dir]/[dir]',
           'extract-loader',
-          'html-loader'
-        ]
+          'html-loader',
+        ],
       },
       // Load images as URLs
       {
         test: /\.(png|svg|jpg|gif|ico)$/,
         use: {
-          loader: 'url-loader'
-        }
+          loader: 'url-loader',
+        },
       },
       // Load locales files
       {
@@ -87,11 +88,11 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'locales'
-            }
-          }
-        ]
-      }
-    ]
-  }
-})
+              outputPath: 'locales',
+            },
+          },
+        ],
+      },
+    ],
+  },
+});
