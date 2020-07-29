@@ -14,17 +14,19 @@ import 'search.module';
 import 'sidebar.module';
 import 'toolbar.module';
 import 'trip_planner';
-import Overlay from 'ol/Overlay';
 import SparqlJson from 'hs.source.SparqlJson';
 import VectorLayer from 'ol/layer/Vector';
 import View from 'ol/View';
 import angular from 'angular';
 import hr_mappings from './human-readable-names';
+import {AdvancedInfopanelComponent} from './advancedInfopanel.component';
 import {Circle, Fill, Icon, Stroke, Style, Text} from 'ol/style';
 import {GeoJSON} from 'ol/format';
 import {Group, Image as ImageLayer, Tile} from 'ol/layer';
 import {ImageArcGISRest, ImageWMS} from 'ol/source';
 import {OSM, TileWMS, WMTS, XYZ} from 'ol/source';
+import {PointPopupComponent} from './pointPopup.component';
+import {SpoiAttributesFilter} from './spoiAttributes.filter';
 import {Vector as VectorSource} from 'ol/source';
 import {transform, transformExtent} from 'ol/proj';
 
@@ -231,29 +233,8 @@ angular
       };
     },
   ])
-  .directive('hs.advancedInfopanelDirective', () => {
-    return {
-      template: require('./advanced_info.html'),
-      link: function (scope, element, attrs) {
-        $('#advanced-info-dialog').modal('show');
-      },
-    };
-  })
-  .directive('hs.pointPopupDirective', () => {
-    return {
-      template: require('./pointpopup.html'),
-      link: function (scope, element, attrs) {
-        const container = document.getElementById('popup');
-        scope.popup = new Overlay({
-          element: container,
-          autoPan: true,
-          autoPanAnimation: {
-            duration: 250,
-          },
-        });
-      },
-    };
-  })
+  .directive('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)
+  .directive('hs.pointPopupDirective', PointPopupComponent)
   .value('HsConfig', {
     search_provider: ['sdi4apps_openapi', 'geonames'],
     box_layers: [base_layer_group, tourist_layer_group, weather_layer_group],
@@ -325,7 +306,7 @@ angular
       queryService
     ) {
       if (console) {
-        console.log('Main called');
+        //console.log('Main called');
       }
       $scope.Core = Core;
 
@@ -770,9 +751,4 @@ angular
       $scope.splitAddress = splitAddress;
     },
   ])
-  .filter('usrFrSpoiAttribs', [
-    'spoi_editor',
-    function (spoi_editor) {
-      return spoi_editor.filterAttribs;
-    },
-  ]);
+  .filter('usrFrSpoiAttribs', SpoiAttributesFilter);
