@@ -94,7 +94,7 @@ var route_style = function (feature, resolution) {
 };
 
 var base_layer_group = new Group({
-    'img': require('osm.png'),
+    'img': require('img/osm.png'),
     title: 'Base layer',
     layers: [
         new Tile({
@@ -136,12 +136,12 @@ var base_layer_group = new Group({
 
 var tourist_layer_group = new Group({
     title: 'Touristic',
-    'img': require('POIs.png'),
+    'img': require('img/POIs.png'),
     layers: []
 });
 
 var weather_layer_group = new Group({
-    'img': require('partly_cloudy.png'),
+    'img': require('img/partly_cloudy.png'),
     title: 'Weather',
     layers: [new Tile({
         title: "OpenWeatherMap cloud cover",
