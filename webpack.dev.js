@@ -35,6 +35,8 @@ module.exports = merge(common, {
     // Path where bundled files will be output
     path: path.resolve(__dirname, './static'),
     filename: '[name].bundle.js',
+    // Path at which output assets will be served
+    publicPath: 'static/',
   },
   devServer: {
     contentBase: path.resolve(__dirname),
