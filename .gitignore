@@ -5,6 +5,7 @@ bundle.min.js.map
 static
 build
 dist
+.vscode
 index.html
 .tern-project
 *.bat
