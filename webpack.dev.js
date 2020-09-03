@@ -76,6 +76,9 @@ module.exports = merge(common, {
         test: /\.(png|svg|jpg|gif|ico)$/,
         use: {
           loader: 'url-loader',
+          options: {
+            esModule: false,
+          },
         },
       },
       // Load locales files
