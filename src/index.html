@@ -18,7 +18,7 @@
     <% } %>
 </head>
 <body >
-    <div hs ng-app="hs" ng-controller="Main" style="height: 100vh;"></div>
+    <hs ng-app="hs" style="height: 100vh;" ng-strict-di></hs>
     <% for (var js in htmlWebpackPlugin.files.js) { %>
       <script type="application/javascript" src="<%= htmlWebpackPlugin.files.js[js] %>"></script>
     <% } %>
