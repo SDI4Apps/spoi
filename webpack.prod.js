@@ -83,7 +83,12 @@ module.exports = merge(common, {
             loader: MiniCssExtractPlugin.loader,
             options: {publicPath: ''},
           },
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false,
+            },
+          },
         ],
       },
       {
