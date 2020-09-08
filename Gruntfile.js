@@ -30,13 +30,8 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-angular-gettext');
     grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-contrib-uglify-es');
-    grunt.loadNpmTasks('grunt-exec');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('git-pre-commit', ['jsbeautifier']);
 
 
 };
