@@ -10,5 +10,5 @@ import {UploadComponent} from './upload.component';
 angular
   .module('hs.upload', ['hs.core', 'spoi_editor'])
 
-  .directive('hs.upload.directive', UploadComponent);
+  .component('hs.upload.directive', UploadComponent);
 //})

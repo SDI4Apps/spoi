@@ -50,8 +50,8 @@ angular
     'hs.upload',
   ])
   .component('hs', AppComponent)
-  .directive('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)
-  .directive('hs.pointPopupDirective', PointPopupComponent)
+  .component('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)
+  .component('hs.pointPopupDirective', PointPopupComponent)
   .value('HsConfig', {
     panelsEnabled: {
       composition_browser: false,
