@@ -1,7 +1,5 @@
 'use strict';
 import './geosparql.css';
-import './spoiEditor/spoiEditor.module';
-import './upload/upload.module';
 import 'hslayers-ng/components/add-layers/add-layers.module';
 import 'hslayers-ng/components/datasource-selector/datasource-selector.module';
 import 'hslayers-ng/components/draw/draw.module';
@@ -27,6 +25,8 @@ import {
 } from './app.component';
 import {PointPopupComponent} from './pointPopup.component';
 import {SpoiAttributesFilter} from './spoiAttributes.filter';
+import {SpoiEditorModule} from './spoiEditor/spoiEditor.module';
+import {UploadModule} from './upload/upload.module';
 
 angular
   .module('hs', [
@@ -46,8 +46,8 @@ angular
     'gettext',
     'hs.compositions',
     'hs.trip_planner',
-    'spoi_editor',
-    'hs.upload',
+    SpoiEditorModule,
+    UploadModule,
   ])
   .component('hs', AppComponent)
   .component('hs.advancedInfopanelDirective', AdvancedInfopanelComponent)

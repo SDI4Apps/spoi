@@ -1,9 +1,9 @@
-import angular from 'angular';
+import * as angular from 'angular';
 import {spoiEditorService} from './spoiEditor.service';
 /**
  * @namespace spoi_editor
  */
-angular
+export const SpoiEditorModule = angular
   .module('spoi_editor', ['hs.core'])
 
-  .service('spoi_editor', spoiEditorService);
+  .service('spoi_editor', spoiEditorService).name;
