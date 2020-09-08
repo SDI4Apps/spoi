@@ -1,3 +1,2 @@
 #!/bin/sh
-node browserify.js
-grunt
+npm run build
