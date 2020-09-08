@@ -61,6 +61,7 @@ module.exports = {
               plugins: [
                 'angularjs-annotate',
                 '@babel/plugin-syntax-dynamic-import',
+                '@babel/plugin-proposal-class-properties',
               ],
             },
           },
