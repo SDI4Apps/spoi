@@ -8,7 +8,7 @@ export const UploadComponent = {
     group: '=',
   },
   controller: class UploadComponent {
-    constructor($http, HsCore, HsUtilsService, spoi_editor) {
+    constructor($http, $scope, HsCore, HsUtilsService, spoi_editor) {
       'ngInject';
       angular.element('#drag-and-drop-zone').dmUploader({
         url: 'http://app.hslayers.org/photo-api/upload.php',
@@ -59,13 +59,13 @@ export const UploadComponent = {
           ) {
             $.danidemo.updateFileStatus(id, 'success', 'Upload Complete');
             $.danidemo.updateFileProgress(id, '100%');
-            scope.group.attributes.unshift({
+            $scope.group.attributes.unshift({
               name: 'http://xmlns.com/foaf/0.1/depiction',
               value:
                 data.results.bindings[1]['http://xmlns.com/foaf/0.1/depiction'],
             });
-            if (!scope.$parent.$$phase) {
-              scope.$parent.$digest();
+            if (!$scope.$parent.$$phase) {
+              $scope.$parent.$digest();
             }
           }
         },
