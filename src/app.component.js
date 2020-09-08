@@ -12,17 +12,17 @@ import {Vector as VectorSource} from 'ol/source';
 import {transform, transformExtent} from 'ol/proj';
 
 const symbols = {
-  car_service: require('../symbolsWaze/car_service.png'),
-  bank: require('../symbols/bank.png'),
-  atm: require('../symbols/atm.png'),
-  cafe: require('../symbols/cafe.png'),
-  fast_food: require('../symbols/fast_food.png'),
-  pub: require('../symbols/pub.png'),
-  restaurant: require('../symbols/restaurant.png'),
-  hotel: require('../symbols/hotel.png'),
-  supermarket: require('../symbols/supermarket.png'),
-  information: require('../symbols/information.png'),
-  camp_site: require('../symbols/camp_site.png'),
+  car_service: require('../img/symbolsWaze/car_service.png'),
+  bank: require('../img/symbols/bank.png'),
+  atm: require('../img/symbols/atm.png'),
+  cafe: require('../img/symbols/cafe.png'),
+  fast_food: require('../img/symbols/fast_food.png'),
+  pub: require('../img/symbols/pub.png'),
+  restaurant: require('../img/symbols/restaurant.png'),
+  hotel: require('../img/symbols/hotel.png'),
+  supermarket: require('../img/symbols/supermarket.png'),
+  information: require('../img/symbols/information.png'),
+  camp_site: require('../img/symbols/camp_site.png'),
 };
 
 const styleOSM = function (feature, resolution) {
