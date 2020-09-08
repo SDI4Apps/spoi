@@ -1,17 +1,18 @@
 import Overlay from 'ol/Overlay';
 
-export const PointPopupComponent = () => {
-  return {
-    template: require('./pointpopup.html'),
-    link: function (scope, element, attrs) {
+export const PointPopupComponent = {
+  template: require('./pointpopup.html'),
+  controller: class PointPopupComponent {
+    constructor($scope) {
+      'ngInject';
       const container = document.getElementById('popup');
-      scope.popup = new Overlay({
+      $scope.popup = new Overlay({
         element: container,
         autoPan: true,
         autoPanAnimation: {
           duration: 250,
         },
       });
-    },
-  };
+    }
+  },
 };

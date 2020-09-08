@@ -2,19 +2,14 @@ import './demo.min';
 import './dmuploader';
 import * as angular from 'angular';
 
-export const UploadComponent = function (
-  $http,
-  HsCore,
-  HsUtilsService,
-  spoi_editor
-) {
-  'ngInject';
-  return {
-    template: require('./upload.html'),
-    scope: {
-      group: '=',
-    },
-    link: function (scope, element) {
+export const UploadComponent = {
+  template: require('./upload.html'),
+  bindings: {
+    group: '=',
+  },
+  controller: class UploadComponent {
+    constructor($http, HsCore, HsUtilsService, spoi_editor) {
+      'ngInject';
       angular.element('#drag-and-drop-zone').dmUploader({
         url: 'http://app.hslayers.org/photo-api/upload.php',
         dataType: 'json',
@@ -105,6 +100,6 @@ export const UploadComponent = function (
           );
         },
       });
-    },
-  };
+    }
+  },
 };
