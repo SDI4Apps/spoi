@@ -1,6 +1,6 @@
 import * as angular from 'angular';
 
-import SparqlJson from 'hs.source.SparqlJson';
+import SparqlJson from 'hslayers-ng/components/layers/hs.source.SparqlJson';
 import VectorLayer from 'ol/layer/Vector';
 import hr_mappings from './human-readable-names';
 import {Circle, Fill, Icon, Stroke, Style, Text} from 'ol/style';
@@ -12,17 +12,17 @@ import {Vector as VectorSource} from 'ol/source';
 import {transform, transformExtent} from 'ol/proj';
 
 const symbols = {
-  car_service: require('symbolsWaze/car_service.png'),
-  bank: require('symbols/bank.png'),
-  atm: require('symbols/atm.png'),
-  cafe: require('symbols/cafe.png'),
-  fast_food: require('symbols/fast_food.png'),
-  pub: require('symbols/pub.png'),
-  restaurant: require('symbols/restaurant.png'),
-  hotel: require('symbols/hotel.png'),
-  supermarket: require('symbols/supermarket.png'),
-  information: require('symbols/information.png'),
-  camp_site: require('symbols/camp_site.png'),
+  car_service: require('../symbolsWaze/car_service.png'),
+  bank: require('../symbols/bank.png'),
+  atm: require('../symbols/atm.png'),
+  cafe: require('../symbols/cafe.png'),
+  fast_food: require('../symbols/fast_food.png'),
+  pub: require('../symbols/pub.png'),
+  restaurant: require('../symbols/restaurant.png'),
+  hotel: require('../symbols/hotel.png'),
+  supermarket: require('../symbols/supermarket.png'),
+  information: require('../symbols/information.png'),
+  camp_site: require('../symbols/camp_site.png'),
 };
 
 const styleOSM = function (feature, resolution) {
@@ -90,7 +90,7 @@ const style = function (feature, resolution) {
 const geoJsonFormat = new GeoJSON();
 
 export const base_layer_group = new Group({
-  'img': require('img/osm.png'),
+  'img': require('../img/osm.png'),
   title: 'Base layer',
   layers: [
     new Tile({
@@ -134,12 +134,12 @@ export const base_layer_group = new Group({
 
 export const tourist_layer_group = new Group({
   title: 'Touristic',
-  'img': require('img/POIs.png'),
+  'img': require('../img/POIs.png'),
   layers: [],
 });
 
 export const weather_layer_group = new Group({
-  'img': require('img/partly_cloudy.png'),
+  'img': require('../img/partly_cloudy.png'),
   title: 'Weather',
   layers: [
     new Tile({

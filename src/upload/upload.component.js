@@ -10,7 +10,7 @@ export const UploadComponent = function (
 ) {
   'ngInject';
   return {
-    templateUrl: 'upload.html',
+    template: require('./upload.html'),
     scope: {
       group: '=',
     },
