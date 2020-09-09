@@ -199,7 +199,8 @@ export const AppComponent = {
     HsUtilsService,
     spoi_editor,
     HsQueryBaseService,
-    HsLayoutService
+    HsLayoutService,
+    SpoiService
   ) {
     'ngInject';
     if (console) {
@@ -506,7 +507,7 @@ export const AppComponent = {
             visible: false,
             path: 'Points of interest',
             category: category,
-            maxResolution: getMaxResolution(category),
+            maxResolution: SpoiService.getMaxResolution(category),
           });
           tourist_layer_group.getLayers().insertAt(0, new_lyr);
         }
@@ -552,7 +553,7 @@ export const AppComponent = {
         style: styleOSM,
         visible: false,
         path: 'Popular Categories',
-        maxResolution: getMaxResolution(category),
+        maxResolution: SpoiService.getMaxResolution(category),
         category: category,
       });
       tourist_layer_group.getLayers().insertAt(0, new_lyr);
@@ -560,37 +561,6 @@ export const AppComponent = {
     list_loaded.static_categories = true;
 
     checkListLoaded();
-
-    function getMaxResolution(category) {
-      let default_res = 38;
-      //console.log(category);
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#transportation') {
-        default_res = 4;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#other') {
-        default_res = 19;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#outdoor') {
-        default_res = 160;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#car_service') {
-        default_res = 20;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#natural_feature') {
-        default_res = 160;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#camp_site') {
-        default_res = 310;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#lodging') {
-        default_res = 160;
-      }
-      if (category == 'http://gis.zcu.cz/SPOI/Ontology#information') {
-        default_res = 160;
-      }
-
-      return default_res;
-    }
 
     $scope.showDeveloperInfo = function () {
       $('#hs-dialog-area #advanced-info-dialog').remove();
@@ -631,10 +601,6 @@ export const AppComponent = {
       HsQueryBaseService.enabled = expanded;
     });
 
-    function splitAddress(url) {
-      return url.split('#')[1];
-    }
-
-    $scope.splitAddress = splitAddress;
+    $scope.splitAddress = SpoiService.splitAddress;
   },
 };

@@ -12,10 +12,10 @@ import 'hslayers-ng/components/search/search.module';
 import 'hslayers-ng/components/sidebar/sidebar.module';
 import 'hslayers-ng/components/toolbar/toolbar.module';
 import 'hslayers-ng/components/trip_planner/trip_planner';
+import * as angular from 'angular';
 import SparqlJson from 'hslayers-ng/components/layers/hs.source.SparqlJson';
 import VectorLayer from 'ol/layer/Vector';
 import View from 'ol/View';
-import angular from 'angular';
 import {AdvancedInfopanelComponent} from './advancedInfopanel.component';
 import {
   AppComponent,
@@ -26,6 +26,7 @@ import {
 import {PointPopupComponent} from './pointPopup.component';
 import {SpoiAttributesFilter} from './spoiAttributes.filter';
 import {SpoiEditorModule} from './spoiEditor/spoiEditor.module';
+import {SpoiService} from './app.service';
 import {UploadModule} from './upload/upload.module';
 
 angular
@@ -96,4 +97,5 @@ angular
     }),
     infopanel_template: 'infopanel.html',
   })
+  .service('SpoiService', SpoiService)
   .filter('usrFrSpoiAttribs', SpoiAttributesFilter);
