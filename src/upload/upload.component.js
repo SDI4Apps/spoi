@@ -53,8 +53,8 @@ export const UploadComponent = {
         },
         onUploadSuccess: function (id, data) {
           if (
-            angular.isDefined(data.results) &&
-            angular.isDefined(data.results.bindings) &&
+            data.results !== undefined &&
+            data.results.bindings !== undefined &&
             data.results.bindings.length > 1
           ) {
             $.danidemo.updateFileStatus(id, 'success', 'Upload Complete');

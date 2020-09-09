@@ -61,7 +61,7 @@ export class SpoiEditorService {
   makeHumanReadable(attribute) {
     const value = this.$sce.valueOf(attribute.value);
     const name = this.$sce.valueOf(attribute.name);
-    if (angular.isUndefined(this.hr_mappings[name])) {
+    if (this.hr_mappings[name] === undefined) {
       if (name.indexOf('depiction') > 0) {
         return this.$sce.trustAsHtml(
           '<a target="_blank" href="' +
@@ -78,7 +78,7 @@ export class SpoiEditorService {
         return value;
       }
     }
-    if (angular.isDefined(this.hr_mappings[name][value])) {
+    if (this.hr_mappings[name][value] !== undefined) {
       return this.hr_mappings[name][value];
     } else {
       return attribute.value;
@@ -89,7 +89,7 @@ export class SpoiEditorService {
     let identifier = '';
     const changes = [];
     angular.forEach(attributes, (a) => {
-      if (angular.isDefined(a.changed) && a.changed) {
+      if (a.changed !== undefined && a.changed) {
         changes.push({
           attribute: a.name,
           value: this.$sce.valueOf(a.value),
@@ -135,11 +135,11 @@ export class SpoiEditorService {
         attribute_set_id +
         '>'
     );
-    angular.forEach(changes, (a) => {
+    for (const a of changes) {
       lines.push(
         '<' + attribute_set_id + '> <' + a.attribute + '> "' + a.value + '"'
       );
-    });
+    };
 
     const query = [
       'INSERT DATA { GRAPH <http://www.sdi4apps.eu/poi_changes.rdf> {',
@@ -154,7 +154,7 @@ export class SpoiEditorService {
       )
       .then((response) => {
         angular.forEach(attributes, (a) => {
-          if (angular.isDefined(a.changed) && a.changed) {
+          if (a.changed !== undefined && a.changed) {
             delete a.changed;
           }
         });
@@ -163,7 +163,7 @@ export class SpoiEditorService {
 
   cancelSpoiChanges(attributes) {
     angular.forEach(attributes, (a) => {
-      if (angular.isDefined(a.changed) && a.changed) {
+      if (a.changed !== undefined && a.changed) {
         a.value = a.original_value;
         a.changed = false;
         a.is_editing = false;
@@ -205,11 +205,11 @@ export class SpoiEditorService {
       'http://purl.org/dc/terms/1.1/created': now.toISOString(),
       'http://www.sdi4apps.eu/poi_changes/status': 'unchecked',
     };
-    angular.forEach(this.frnly_attribs, (default_attrib) => {
-      if (angular.isUndefined(attrs[default_attrib])) {
+    for (const default_attrib of this.frnly_attribs) {
+      if (attrs[default_attrib] === undefined) {
         attrs[default_attrib] = '';
       }
-    });
+    }
 
     const lines = [];
     lines.push(
@@ -265,18 +265,18 @@ export class SpoiEditorService {
   }
 
   startEdit(attribute, x) {
-    if (angular.isUndefined(attribute.changed) || !attribute.changed) {
+    if (attribute.changed === undefined || !attribute.changed) {
       attribute.original_value = attribute.value;
     }
     attribute.is_editing = !(
-      angular.isDefined(attribute.is_editing) && attribute.is_editing
+      attribute.is_editing !== undefined && attribute.is_editing
     );
   }
 
   attributesHaveChanged(attributes) {
     let tmp = false;
     angular.forEach(attributes, (a) => {
-      if (angular.isDefined(a.changed) && a.changed) {
+      if (a.changed !== undefined && a.changed) {
         tmp = true;
       }
     });
@@ -286,7 +286,7 @@ export class SpoiEditorService {
   editDropdownVisible(attribute) {
     return (
       attribute.is_editing &&
-      angular.isDefined(this.getSpoiDropdownItems(attribute.name)) &&
+      this.getSpoiDropdownItems(attribute.name) !== undefined &&
       attribute.name.indexOf('#class') <= 0
     );
   }
@@ -294,7 +294,7 @@ export class SpoiEditorService {
   editCategoryDropdownVisible(attribute) {
     return (
       attribute.is_editing &&
-      angular.isDefined(this.getSpoiCategories()) &&
+      this.getSpoiCategories() !== undefined &&
       attribute.name.indexOf('#class') > 0
     );
   }

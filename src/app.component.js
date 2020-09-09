@@ -234,10 +234,7 @@ export const AppComponent = {
 
     //Which ever comes first - map.laoded event or popup directives link function - add the overlay.
     function addPopupToMap() {
-      if (
-        angular.isDefined($scope.popup) &&
-        angular.isUndefined($scope.popup.added)
-      ) {
+      if ($scope.popup !== undefined && $scope.popup.added === undefined) {
         HsMapService.map.addOverlay($scope.popup);
         $scope.popup.added = true;
       }
@@ -245,7 +242,7 @@ export const AppComponent = {
 
     $scope.addPopupToMap = addPopupToMap;
 
-    if (angular.isDefined(HsMapService.map)) {
+    if (HsMapService.map !== undefined) {
       $scope.addPopupToMap();
     } else {
       $rootScope.$on('map.loaded', $scope.addPopupToMap);
@@ -369,12 +366,12 @@ export const AppComponent = {
     function createLayerSelectorForNewPoi(coordinate) {
       const possible_layers = [];
       angular.element('#hs-spoi-new-layer-list').html('');
-      angular.forEach(tourist_layer_group.getLayers(), (layer) => {
+      tourist_layer_group.getLayers().forEach((layer) => {
         if (layer.getVisible()) {
           possible_layers.push(layer);
           const $li = $('<li><a href="#">' + layer.get('title') + '</a></li>');
           const category = layer.get('category');
-          if (angular.isDefined(spoi_editor.getCategoryHierarchy()[category])) {
+          if (spoi_editor.getCategoryHierarchy()[category] !== undefined) {
             //Was main category
             $li.addClass('dropdown-submenu');
             const $ul = $('<ul></ul>');
@@ -460,17 +457,17 @@ export const AppComponent = {
       cache: false,
     }).then((response) => {
       let last_main_category = '';
-      angular.forEach(response.data.results.bindings, (x) => {
-        const category = x.main.value;
+      for (const result of response.data.results.bindings) {
+        const category = result.main.value;
         spoi_editor.registerCategory(
-          x.main.value,
-          x.label.value,
-          x.subs.value,
-          x.sublabel.value
+          result.main.value,
+          result.label.value,
+          result.subs.value,
+          result.sublabel.value
         );
         if (category != last_main_category) {
           last_main_category = category;
-          const name = x.label.value.capitalizeFirstLetter();
+          const name = result.label.value.capitalizeFirstLetter();
           const new_lyr = new VectorLayer({
             title: ' ' + name,
             source: new SparqlJson({
@@ -511,7 +508,7 @@ export const AppComponent = {
           });
           tourist_layer_group.getLayers().insertAt(0, new_lyr);
         }
-      });
+      }
       list_loaded.dynamic_categories = true;
       checkListLoaded();
     });
@@ -572,9 +569,9 @@ export const AppComponent = {
     $scope.attributeEditorMode = function (attribute) {
       if ($scope.editTextboxVisible(attribute)) {
         return 1;
-      } else if ($sce.valueOf(attribute.value).indexOf('http') == -1) {
+      } else if (!$sce.valueOf(attribute.value).includes('http')) {
         return 2;
-      } else if ($sce.valueOf(attribute.value).indexOf('http') > -1) {
+      } else if ($sce.valueOf(attribute.value).includes('http')) {
         return 3;
       }
     };
