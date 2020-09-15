@@ -16,6 +16,7 @@ const {merge} = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
 const webpack = require('webpack');
+const DynamicPubPathPlugin = require('dynamic-pub-path-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -35,6 +36,10 @@ module.exports = merge(common, {
     symlinks: true,
   },
   plugins: [
+    // Allow loading assets from another location via HSL_PATH
+    new DynamicPubPathPlugin({
+      'expression': `(window.HSL_PATH || './build/')`,
+    }),
     // Extract CSS into separated css files
     new MiniCssExtractPlugin({
       // Add a chunkhash to file name so it will not be cached by browsers when content changed
