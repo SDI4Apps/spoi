@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/SDI4Apps/spoi#readme",
   "dependencies": {
-    "hslayers-ng": "^1.24.3"
+    "hslayers-ng": "^1.27.3"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
