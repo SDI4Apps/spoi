@@ -1,4 +1,4 @@
-export const SpoiAttributesFilter = function (spoi_editor) {
+export const SpoiAttributesFilter = function (SpoiEditorService) {
   'ngInject';
-  return spoi_editor.filterAttribs;
+  return SpoiEditorService.filterAttribs;
 };
