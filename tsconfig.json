@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "lib": ["es2018", "dom"],
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule":true,
+  },
+  "paths": {
+    "hslayers-ng": [
+      "./node_modules/hslayers-ng/src/public-api.ts"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableResourceInlining": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}
