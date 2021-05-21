@@ -6,7 +6,8 @@ static
 build
 dist
 .vscode
-index.html
+/index.html
 .tern-project
 *.bat
 *.cmd
+/.vs
