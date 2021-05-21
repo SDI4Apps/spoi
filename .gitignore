@@ -10,3 +10,4 @@ dist
 .tern-project
 *.bat
 *.cmd
+/.vs
