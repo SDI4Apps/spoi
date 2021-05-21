@@ -18,9 +18,9 @@ import hr_mappings from './human-readable-names';
 import {HsConfig, HsLanguageService} from 'hslayers-ng';
 import {SparqlJson} from 'hslayers-ng';
 
-proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
-register(proj4);
-const sjtskProjection = getProjection('EPSG:5514');
+//proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
+//register(proj4);
+//const sjtskProjection = getProjection('EPSG:5514');
 const defaultLayers = [
     //Nové BASEMAPY
     new Tile({
@@ -176,8 +176,8 @@ function getSpoiLayers(): any[]  {
             style: styleOSM,
             visible: false,
             path: 'Popular Categories',
-            maxResolution: 310,
-            category: category,
+            //maxResolution: 310,
+            //category: category,
         }));
     }
 
@@ -232,9 +232,9 @@ export class AppComponent {
         compositionLoadingProgress: true
       },
       default_view: new View({
-        projection: sjtskProjection,
-        center: transform([15.628, 49.864249], 'EPSG:4326', 'EPSG:5514'), //Latitude longitude    to S-JTSK
-        extent: transformExtent([9.832275, 46.151428, 21.423828, 53.577070], 'EPSG:4326', 'EPSG:5514'),
+        projection: 'EPSG:3857',
+        center: transform([15.628, 49.864249], 'EPSG:4326', 'EPSG:3857'), //Latitude longitude    to Mercaator
+        //extent: transformExtent([9.832275, 46.151428, 21.423828, 53.577070], 'EPSG:4326', 'EPSG:5514'),
         multiWorld: false,
         zoom: 9
       })
