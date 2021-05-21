@@ -1,16 +1,19 @@
+var popular_categories: { [key: string]: string } = {
+  'http://gis.zcu.cz/SPOI/Ontology#atm': 'ATM',
+  'http://gis.zcu.cz/SPOI/Ontology#bank': 'Bank',
+  'http://gis.zcu.cz/SPOI/Ontology#cafe': 'Cafe',
+  'http://gis.zcu.cz/SPOI/Ontology#fast_food': 'Fast food',
+  'http://gis.zcu.cz/SPOI/Ontology#pub': 'Pub',
+  'http://gis.zcu.cz/SPOI/Ontology#restaurant': 'Restaurant',
+  'http://gis.zcu.cz/SPOI/Ontology#hotel': 'Hotel',
+  'http://gis.zcu.cz/SPOI/Ontology#supermarket': 'Supermarket',
+  'http://gis.zcu.cz/SPOI/Ontology#information': 'Information',
+  'http://gis.zcu.cz/SPOI/Ontology#camp_site': 'Camp Site',
+}
+
+
 export default {
-  'popular_categories': {
-    'http://gis.zcu.cz/SPOI/Ontology#atm': 'ATM',
-    'http://gis.zcu.cz/SPOI/Ontology#bank': 'Bank',
-    'http://gis.zcu.cz/SPOI/Ontology#cafe': 'Cafe',
-    'http://gis.zcu.cz/SPOI/Ontology#fast_food': 'Fast food',
-    'http://gis.zcu.cz/SPOI/Ontology#pub': 'Pub',
-    'http://gis.zcu.cz/SPOI/Ontology#restaurant': 'Restaurant',
-    'http://gis.zcu.cz/SPOI/Ontology#hotel': 'Hotel',
-    'http://gis.zcu.cz/SPOI/Ontology#supermarket': 'Supermarket',
-    'http://gis.zcu.cz/SPOI/Ontology#information': 'Information',
-    'http://gis.zcu.cz/SPOI/Ontology#camp_site': 'Camp Site',
-  },
+  popular_categories,
   'http://www.opengis.net/ont/geosparql#sfWithin': {
     'http://www.geonames.org/5880801/': 'American Samoa',
     'http://www.geonames.org/1899402/': 'Cook Islands',
