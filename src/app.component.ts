@@ -96,18 +96,20 @@ const defaultLayers = [
     })    
 ];
 
+//TODO: instead of .defaulting require()ed symbols, use hsUtilsService.resolveEsModule() fction
+//TODO: refactor all this floating code into component/service methods
 const symbols = {
-    car_service: require('../img/symbolsWaze/car_service.png'),
-    bank: require('../img/symbols/bank.png'),
-    atm: require('../img/symbols/atm.png'),
-    cafe: require('../img/symbols/cafe.png'), 
-    fast_food: require('../img/symbols/fast_food.png'),
-    pub: require('../img/symbols/pub.png'),
-    restaurant: require('../img/symbols/restaurant.png'),
-    hotel: require('../img/symbols/hotel.png'),
-    supermarket: require('../img/symbols/supermarket.png'),
-    information: require('../img/symbols/information.png'),
-    camp_site: require('../img/symbols/camp_site.png'),
+    car_service: require('../img/symbolsWaze/car_service.png').default,
+    bank: require('../img/symbols/bank.png').default,
+    atm: require('../img/symbols/atm.png').default,
+    cafe: require('../img/symbols/cafe.png').default, 
+    fast_food: require('../img/symbols/fast_food.png').default,
+    pub: require('../img/symbols/pub.png').default,
+    restaurant: require('../img/symbols/restaurant.png').default,
+    hotel: require('../img/symbols/hotel.png').default,
+    supermarket: require('../img/symbols/supermarket.png').default,
+    information: require('../img/symbols/information.png').default,
+    camp_site: require('../img/symbols/camp_site.png').default,
 };
 
 const styleOSM = function (feature, resolution) {
