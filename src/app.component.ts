@@ -21,8 +21,7 @@ import {SparqlJson} from 'hslayers-ng';
 //proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
 //register(proj4);
 //const sjtskProjection = getProjection('EPSG:5514');
-const defaultLayers = [
-    //Nové BASEMAPY
+const defaultLayers = [    
     new Tile({
         source: new OSM(),
         title: 'OpenStreetMap',
@@ -140,12 +139,12 @@ const styleOSM = function (feature, resolution) {
 function getSpoiLayers(): any[]  {
 
   let category: string,
-    layers: any[] = [],
-    categories: Array<Record<string, string>> = Array.of(hr_mappings.popular_categories); 
+    layers: any[] = [];
+    
 
   for (category in hr_mappings.popular_categories) {
         layers.push(new VectorLayer({
-            title: "raz dva" /*' ' + name*/,
+            title: hr_mappings.popular_categories[category],
             source: new SparqlJson({
                 geom_attribute: '?geom',
                 url:
@@ -172,25 +171,20 @@ function getSpoiLayers(): any[]  {
                     '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
                 //category_field: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
                 category: category,
-                projection: 'EPSG:3857',
-                //extend_with_attribs: spoi_editor.getFriendlyAttribs(),
+                projection: 'EPSG:3857',                
             }),
             style: styleOSM,
             visible: false,
-            path: 'Popular Categories',
-            //maxResolution: 310,
-            //category: category,
+            path: 'Popular Categories'            
         }));
     }
 
     return layers;
 }
 
-function getLayers(): any[] {
+function getLayers(): any[] { 
   return defaultLayers.concat(getSpoiLayers());
 }
-
-let test = getLayers();
 
 @Component({
   selector: 'app-component',
@@ -198,6 +192,7 @@ let test = getLayers();
 })
 export class AppComponent {
   constructor(public HsConfig: HsConfig, public hsLangService: HsLanguageService) {
+
     this.HsConfig.update({
       useProxy: false,
       assetsPath: 'assets/hslayers-ng',
