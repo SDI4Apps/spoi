@@ -11,8 +11,9 @@
       "temperature": "teplota"
     },
     "INFOPANEL": {
-      "info": "Informace o prvku",
-      "info-desc": "Zobrazit podrobnosti o bodu zájmu"
+      "info": "Informace o bodu zájmu",
+      "info-desc": "Zobrazit podrobnosti o bodu zájmu",
+      "category": "z kategorie"
     }
   },
   "en": {
@@ -27,8 +28,9 @@
       "temperature": "temperature"
     },
     "INFOPANEL": {
-      "info": "Feature info",
-      "info-desc": "Show details about the POI"
+      "info": "Information about POI",
+      "info-desc": "Show details about the POI",
+      "category": "from the category"
     }
   }
 }
