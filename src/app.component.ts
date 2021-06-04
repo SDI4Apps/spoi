@@ -1,14 +1,12 @@
 import {Component} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 
-import VectorLayer from 'ol/layer/Vector';
-import View from 'ol/View';
 import {Icon, Style} from 'ol/style';
 import {OSM} from 'ol/source';
 import {Tile} from 'ol/layer';
+import {Vector as VectorLayer} from 'ol/layer';
+import {View} from 'ol';
 import {transform} from 'ol/proj';
-
-import hr_mappings from './human-readable-names';
 
 import {
   HsConfig,
@@ -16,6 +14,9 @@ import {
   HsUtilsService,
   SparqlJson,
 } from 'hslayers-ng';
+
+import hr_mappings from './human-readable-names';
+import ms from './map-symbols.json';
 
 //proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
 //register(proj4);
@@ -26,41 +27,7 @@ import {
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  private symbols: {[key: string]: any} = {
-    'car_service': this.HsUtilsService.resolveEsModule(
-      require('../img/symbolsWaze/car_service.png')
-    ),
-    'bank': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/bank.png')
-    ),
-    'atm': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/atm.png')
-    ),
-    'cafe': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/cafe.png')
-    ),
-    'fast_food': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/fast_food.png')
-    ),
-    'pub': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/pub.png')
-    ),
-    'restaurant': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/restaurant.png')
-    ),
-    'hotel': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/hotel.png')
-    ),
-    'supermarket': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/supermarket.png')
-    ),
-    'information': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/information.png')
-    ),
-    'camp_site': this.HsUtilsService.resolveEsModule(
-      require('../img/symbols/camp_site.png')
-    ),
-  };
+  private symbols: {[key: string]: string} = ms.mapSymbols;
 
   constructor(
     public HsConfig: HsConfig,
@@ -116,7 +83,10 @@ export class AppComponent {
   /* PRIVATE METHODS */
 
   private getStyleOSM(category: string): Style | void {
-    const symbolSrc = this.symbols[category];
+    const symbolSrc = this.HsUtilsService.resolveEsModule(
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      require('../img/' + this.symbols[category])
+    );
     //console.log(`symbolSrc: ${symbolSrc}`)
     if (symbolSrc === undefined) {
       console.warn(`No symbol found for category: ${symbolSrc}!`);
