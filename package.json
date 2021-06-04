@@ -1,7 +1,7 @@
 {
-  "name": "foodie-map",
-  "version": "1.99.0",
-  "description": "",
+  "name": "spoi",
+  "version": "2.0.0",
+  "description": "Map of Smart Points of Interest",
   "scripts": {
     "start": "node_modules/.bin/pm2 --no-daemon start ecosystem.config.js",
     "start-dev": "ng serve --aot --disable-host-check",
@@ -59,8 +59,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.lesprojekt.cz/fzadrazil/foodie-map.git"
+    "url": "git+https://github.com/SDI4Apps/spoi.git"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "poi",
+    "spoi",
+    "tourism",
+    "linked data"
+  ],
+  "author": "bosc, ccss",
+  "contributors": [
+    "raitisbe",
+    "jmacura",
+    "kunickyd"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDI4Apps/spoi/issues"
+  },
+  "homepage": "https://github.com/SDI4Apps/spoi#readme"
 }
