@@ -74,9 +74,9 @@ export class AppComponent {
         draw: false,
         print: true,
         saveMap: false,
-        language: false,
+        language: true,
         sensors: false,
-        compositionLoadingProgress: true
+        tripPlanner: true
       },
       default_view: new View({
         projection: 'EPSG:3857',
@@ -86,8 +86,6 @@ export class AppComponent {
         zoom: 9
       })
     });
-
-    this.hsLangService.setLanguage('cs_CZ');
   }
 
   /* PRIVATE METHODS */
