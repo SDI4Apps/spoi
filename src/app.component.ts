@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {Icon, Style} from 'ol/style';
+import {Circle, Fill, Icon, Stroke, Style} from 'ol/style';
 import {OSM} from 'ol/source';
 import {Tile} from 'ol/layer';
 import {Vector as VectorLayer} from 'ol/layer';
@@ -43,7 +43,7 @@ export class AppComponent {
         : '/proxy/',
       popUpDisplay: 'click',
       open_lm_after_comp_loaded: true,
-      default_layers: this.getDefaultLayers().concat(this.getSpoiLayers()),
+      default_layers: [...this.getDefaultLayers(), ...this.getSpoiLayers()],
       componentsEnabled: {
         sidebar: true,
         toolbar: true,
@@ -82,7 +82,7 @@ export class AppComponent {
 
   /* PRIVATE METHODS */
 
-  private getStyleOSM(category: string): Style | void {
+  private getCategoryStyle(category: string): Style | void {
     const symbolSrc = this.hsUtilsService.resolveEsModule(
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('../img/' + this.symbols[category])
@@ -193,10 +193,53 @@ export class AppComponent {
    * @returns An array of VectorLayers containig SPOI data reference.
    * */
   private getSpoiLayers(): VectorLayer[] {
-    let category: string;
+    const popUpConfig = {
+      attributes: Object.entries(hr_mappings.properties).map((entry) => {
+        return {
+          attribute: entry[0],
+          label: entry[1],
+          displayFunction: this.spoiDisplayFunction,
+        };
+      }),
+    };
     const layers: VectorLayer[] = [];
 
-    for (category in this.popularCategories) {
+    layers.push(
+      new VectorLayer({
+        title: 'All POIs (slow)',
+        source: new SparqlJson({
+          geom_attribute: '?geom',
+          url:
+            'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' +
+            encodeURIComponent(
+              `SELECT ?o ?p ?s
+              FROM <http://www.sdi4apps.eu/poi.rdf> FROM <http://www.sdi4apps.eu/poi_changes.rdf> FROM <http://www.sdi4apps.eu/poi_categories.rdf>
+              WHERE {?o <http://www.opengis.net/ont/geosparql#asWKT> ?geom. FILTER(isBlank(?geom) = false).`
+            ) +
+            '<extent>' +
+            encodeURIComponent('?o ?p ?s } ORDER BY ?o') +
+            '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on',
+          projection: 'EPSG:3857',
+        }),
+        style: new Style({
+          image: new Circle({
+            fill: new Fill({
+              color: 'rgba(255, 204, 102, 0.7)',
+            }),
+            stroke: new Stroke({
+              color: 'rgb(230, 46, 0)',
+              width: 1,
+            }),
+            radius: 5,
+          }),
+        }),
+        visible: false,
+        cluster: true,
+        popUp: popUpConfig,
+      })
+    );
+
+    for (const category in this.popularCategories) {
       layers.push(
         new VectorLayer({
           title: this.popularCategories[category],
@@ -228,19 +271,10 @@ export class AppComponent {
             category: category,
             projection: 'EPSG:3857',
           }),
-          style: this.getStyleOSM(category.split('#')[1]),
+          style: this.getCategoryStyle(category.split('#')[1]),
           visible: false,
-          cluster: true,
           path: 'Popular Categories',
-          popUp: {
-            attributes: Object.entries(hr_mappings.properties).map((entry) => {
-              return {
-                attribute: entry[0],
-                label: entry[1],
-                displayFunction: this.spoiDisplayFunction,
-              };
-            }),
-          },
+          popUp: popUpConfig,
         })
       );
     }
