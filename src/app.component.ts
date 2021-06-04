@@ -15,8 +15,8 @@ import {
   SparqlJson,
 } from 'hslayers-ng';
 
-import hr_mappings from './human-readable-names';
-import ms from './map-symbols.json';
+import hr_mappings from './data/human-readable-names.json';
+import ms from './data/map-symbols.json';
 
 //proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
 //register(proj4);
@@ -28,6 +28,8 @@ import ms from './map-symbols.json';
 })
 export class AppComponent {
   private symbols: {[key: string]: string} = ms.mapSymbols;
+  private popularCategories: {[key: string]: string} =
+    hr_mappings.popular_categories;
 
   constructor(
     public HsConfig: HsConfig,
@@ -105,6 +107,7 @@ export class AppComponent {
 
   private getDefaultLayers(): any[] {
     return [
+      // BACKGROUNDS
       new Tile({
         source: new OSM(),
         title: 'OpenStreetMap',
@@ -142,7 +145,7 @@ export class AppComponent {
         path: 'Roads',
       }),
 
-      //WEATHER
+      // WEATHER
       new Tile({
         title: 'OpenWeatherMap cloud cover',
         source: new OSM({
@@ -177,7 +180,7 @@ export class AppComponent {
   }
 
   /**
-   * Loads SPOI layers from human-readable-names.ts file.
+   * Loads SPOI layers from human-readable-names.json file.
    *
    * @returns An array of VectorLayers containig SPOI data reference.
    * */
@@ -185,10 +188,10 @@ export class AppComponent {
     let category: string;
     const layers: VectorLayer[] = [];
 
-    for (category in hr_mappings.popular_categories) {
+    for (category in this.popularCategories) {
       layers.push(
         new VectorLayer({
-          title: hr_mappings.popular_categories[category],
+          title: this.popularCategories[category],
           source: new SparqlJson({
             geom_attribute: '?geom',
             url:
