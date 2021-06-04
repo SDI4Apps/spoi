@@ -2,6 +2,7 @@
   "name": "spoi",
   "version": "2.0.0",
   "description": "Map of Smart Points of Interest",
+  "main": "dist/index.html",
   "scripts": {
     "start": "node_modules/.bin/pm2 --no-daemon start ecosystem.config.js",
     "start-dev": "ng serve --aot --disable-host-check",
