@@ -222,6 +222,7 @@ export class AppComponent {
           }),
           style: this.getStyleOSM(category.split('#')[1]),
           visible: false,
+          cluster: true,
           path: 'Popular Categories',
         })
       );
