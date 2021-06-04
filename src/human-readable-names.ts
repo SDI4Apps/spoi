@@ -156,7 +156,7 @@ export default {
     'http://www.geonames.org/895949': 'Zambia',
     'http://www.geonames.org/878675': 'Zimbabwe',
     'http://www.geonames.org/3374766/': 'Cape Verde',
-    'http://www.geonames.org/2434508/': 'Chad',    
+    'http://www.geonames.org/2434508/': 'Chad',
     'http://www.geonames.org/2309096/': 'Equatorial Guinea',
     'http://www.geonames.org/932692/': 'Lesotho',
     'http://www.geonames.org/2453866/': 'Mali',

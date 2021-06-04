@@ -1,0 +1,15 @@
+{
+  "mapSymbols": {
+    "car_service": "symbolsWaze/car_service.png",
+    "bank": "symbols/bank.png",
+    "atm": "symbols/atm.png",
+    "cafe": "symbols/cafe.png",
+    "fast_food": "symbols/fast_food.png",
+    "pub": "symbols/pub.png",
+    "restaurant": "symbols/restaurant.png",
+    "hotel": "symbols/hotel.png",
+    "supermarket": "symbols/supermarket.png",
+    "information": "symbols/information.png",
+    "camp_site": "symbols/camp_site.png"
+  }
+}
