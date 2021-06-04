@@ -19,6 +19,7 @@ import {
 } from 'hslayers-ng';
 
 import hr_mappings from './data/human-readable-names.json';
+import i18n from './data/translations.json';
 import ms from './data/map-symbols.json';
 import {SpoiPrettyInfopanelComponent} from './pretty-info-panel/pretty-infopanel.component';
 
@@ -87,6 +88,7 @@ export class AppComponent {
         multiWorld: false,
         zoom: 9,
       }),
+      translationOverrides: i18n,
     });
     this.initComponents();
   }
@@ -98,8 +100,7 @@ export class AppComponent {
       panel: 'pretty-info',
       module: 'pretty-info',
       order: 3,
-      title: 'Info',
-      description: 'Infopanel',
+      title: () => this.hsLangService.getTranslation('INFOPANEL.info'),
       icon: 'icon-info-sign',
     });
     this.hsPanelContainerService.create(SpoiPrettyInfopanelComponent, {});

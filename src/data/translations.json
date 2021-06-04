@@ -1,0 +1,34 @@
+{
+  "cs": {
+    "GENERAL": {
+      "all-pois": "Všechny POI (pomalé)",
+      "popular-cats": "Oblíbené kategorie"
+    },
+    "WEATHER": {
+      "weather-info": "Informace o počasí",
+      "cloud-cover": "oblačnost",
+      "precipitation": "srážky",
+      "temperature": "teplota"
+    },
+    "INFOPANEL": {
+      "info": "Informace o prvku",
+      "info-desc": "Zobrazit podrobnosti o bodu zájmu"
+    }
+  },
+  "en": {
+    "GENERAL":{
+      "all-pois": "All POIs (slow)",
+      "popular-cats": "Popular Categories"
+    },
+    "WEATHER": {
+      "weather-info": "Weather Info",
+      "cloud-cover": "cloud cover",
+      "precipitation": "precipitation",
+      "temperature": "temperature"
+    },
+    "INFOPANEL": {
+      "info": "Feature info",
+      "info-desc": "Show details about the POI"
+    }
+  }
+}
