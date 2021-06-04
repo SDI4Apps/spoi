@@ -105,7 +105,6 @@ export class AppComponent {
     });
     this.hsPanelContainerService.create(SpoiPrettyInfopanelComponent, {});
     this.hsQueryBaseService.getFeatureInfoStarted.subscribe((evt) => {
-      console.log(evt);
       this.hsLayoutService.setMainPanel('pretty-info');
     });
   }
@@ -263,6 +262,8 @@ export class AppComponent {
         }),
         visible: false,
         cluster: true,
+        editor: {editable: false},
+        editable: false,
         popUp: popUpConfig,
       })
     );
