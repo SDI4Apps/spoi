@@ -11,6 +11,13 @@
     "http://gis.zcu.cz/SPOI/Ontology#information": "Information",
     "http://gis.zcu.cz/SPOI/Ontology#camp_site": "Camp Site"
   },
+  "properties": {
+    "http://www.w3.org/2000/01/rdf-schema#label": "title",
+    "http://www.sdi4apps.eu/poi/#mainCategory": "category",
+    "http://www.opengis.net/ont/geosparql#sfWithin": "within",
+    "http://purl.org/dc/elements/1.1/source": "source"
+
+  },
   "http://www.opengis.net/ont/geosparql#sfWithin": {
     "http://www.geonames.org/5880801/": "American Samoa",
     "http://www.geonames.org/1899402/": "Cook Islands",

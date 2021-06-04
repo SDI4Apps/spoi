@@ -177,6 +177,16 @@ export class AppComponent {
     ];
   }
 
+  private spoiDisplayFunction(value) {
+    if (value.includes('Ontology#')) {
+      return value.split('#')[1];
+    }
+    if (value.startsWith('http')) {
+      return `<a href="${value}" target="_blank">${value}</a>`;
+    }
+    return value;
+  }
+
   /**
    * Loads SPOI layers from human-readable-names.json file.
    *
@@ -222,6 +232,15 @@ export class AppComponent {
           visible: false,
           cluster: true,
           path: 'Popular Categories',
+          popUp: {
+            attributes: Object.entries(hr_mappings.properties).map((entry) => {
+              return {
+                attribute: entry[0],
+                label: entry[1],
+                displayFunction: this.spoiDisplayFunction,
+              };
+            }),
+          },
         })
       );
     }
