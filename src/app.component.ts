@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
 
 import {Icon, Style} from 'ol/style';
 import {OSM} from 'ol/source';
@@ -32,12 +31,11 @@ export class AppComponent {
     hr_mappings.popular_categories;
 
   constructor(
-    public HsConfig: HsConfig,
+    public hsConfig: HsConfig,
     public hsLangService: HsLanguageService,
-    public HsUtilsService: HsUtilsService,
-    public sanitizer: DomSanitizer
+    public hsUtilsService: HsUtilsService
   ) {
-    this.HsConfig.update({
+    this.hsConfig.update({
       useProxy: false,
       assetsPath: 'assets/hslayers-ng',
       proxyPrefix: window.location.hostname.includes('localhost')
@@ -85,7 +83,7 @@ export class AppComponent {
   /* PRIVATE METHODS */
 
   private getStyleOSM(category: string): Style | void {
-    const symbolSrc = this.HsUtilsService.resolveEsModule(
+    const symbolSrc = this.hsUtilsService.resolveEsModule(
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('../img/' + this.symbols[category])
     );
