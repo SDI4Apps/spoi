@@ -3,26 +3,78 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["openlayers"],
-  "globals": {
-    "$": "readonly"
-  },
-  "parser": "babel-eslint",
-  "rules": {
-    "brace-style": "warn",
-    "no-console": "warn",
-    "prefer-arrow-callback": "warn",
-    "space-before-function-paren": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "ts": "never"
-      }
-    ]
-  },
   "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "openlayers",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/recommended--extra"
+      ],
+      "plugins": [
+        "@typescript-eslint",
+        "@angular-eslint",
+        "eslint-plugin-tsdoc"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "spoi",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "spoi",
+            "style": "kebab-case"
+          }
+        ],
+        "brace-style": "warn",
+        "no-console": "warn",
+        "prefer-arrow-callback": "warn",
+        "space-before-function-paren": "off",
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "never",
+            "ts": "never"
+          }
+        ],
+        "@typescript-eslint/no-empty-function": [
+          "error",
+          {
+            "allow": [
+              "constructors"
+            ]
+          }
+        ],
+        "valid-jsdoc": "off",
+        "tsdoc/syntax": "warn"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "parser": "@angular-eslint/template-parser",
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "plugins": [
+        "@angular-eslint/template"
+      ],
+      "rules": {} 
+    },
     {
       "files": [
         "**/*.spec.js"
@@ -32,5 +84,15 @@
         //"angular/mocks": true
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".ts"
+        ]
+      }
+    }
+  } 
 }
