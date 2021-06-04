@@ -10,12 +10,17 @@ import {transform} from 'ol/proj';
 import {
   HsConfig,
   HsLanguageService,
+  HsLayoutService,
+  HsPanelContainerService,
+  HsQueryBaseService,
+  HsSidebarService,
   HsUtilsService,
   SparqlJson,
 } from 'hslayers-ng';
 
 import hr_mappings from './data/human-readable-names.json';
 import ms from './data/map-symbols.json';
+import {SpoiPrettyInfopanelComponent} from './pretty-info-panel/pretty-infopanel.component';
 
 //proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
 //register(proj4);
@@ -33,6 +38,10 @@ export class AppComponent {
   constructor(
     public hsConfig: HsConfig,
     public hsLangService: HsLanguageService,
+    public hsLayoutService: HsLayoutService,
+    public hsPanelContainerService: HsPanelContainerService,
+    public hsQueryBaseService: HsQueryBaseService,
+    public hsSidebarService: HsSidebarService,
     public hsUtilsService: HsUtilsService
   ) {
     this.hsConfig.update({
@@ -41,7 +50,7 @@ export class AppComponent {
       proxyPrefix: window.location.hostname.includes('localhost')
         ? `${window.location.protocol}//${window.location.hostname}:8085/`
         : '/proxy/',
-      popUpDisplay: 'click',
+      popUpDisplay: 'hover',
       open_lm_after_comp_loaded: true,
       default_layers: [...this.getDefaultLayers(), ...this.getSpoiLayers()],
       componentsEnabled: {
@@ -64,6 +73,7 @@ export class AppComponent {
         mobile_settings: false,
         measure: false,
         draw: false,
+        info: false,
         print: true,
         saveMap: false,
         language: true,
@@ -78,9 +88,26 @@ export class AppComponent {
         zoom: 9,
       }),
     });
+    this.initComponents();
   }
 
   /* PRIVATE METHODS */
+
+  private initComponents(): void {
+    this.hsSidebarService.buttons.push({
+      panel: 'pretty-info',
+      module: 'pretty-info',
+      order: 3,
+      title: 'Info',
+      description: 'Infopanel',
+      icon: 'icon-info-sign',
+    });
+    this.hsPanelContainerService.create(SpoiPrettyInfopanelComponent, {});
+    this.hsQueryBaseService.getFeatureInfoStarted.subscribe((evt) => {
+      console.log(evt);
+      this.hsLayoutService.setMainPanel('pretty-info');
+    });
+  }
 
   private getCategoryStyle(category: string): Style | void {
     const symbolSrc = this.hsUtilsService.resolveEsModule(
