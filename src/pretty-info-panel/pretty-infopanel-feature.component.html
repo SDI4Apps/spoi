@@ -3,7 +3,7 @@
   <span class="text-secondary float-right">{{'INFOPANEL.category' | translate}}&nbsp;{{feature.layer}}</span>
   <table>
     <tr *ngFor="let attr of feature.attributes">
-      <td>{{attr.name}}</td><td>{{attr.value}}</td>
+      <td>{{prettyAttrName(attr.name)}}</td><td>{{prettyAttrValue(attr.value)}}</td>
     </tr>
   </table>
 </div>
