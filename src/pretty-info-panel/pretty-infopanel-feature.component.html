@@ -1,0 +1,9 @@
+<div class="container-fluid">
+  <div class="m-2"><h2>{{feature.name}}</h2></div>
+  <span class="text-secondary float-right">{{'INFOPANEL.category' | translate}}&nbsp;{{feature.layer}}</span>
+  <table>
+    <tr *ngFor="let attr of feature.attributes">
+      <td>{{attr.name}}</td><td>{{attr.value}}</td>
+    </tr>
+  </table>
+</div>
