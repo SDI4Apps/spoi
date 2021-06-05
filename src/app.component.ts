@@ -18,6 +18,7 @@ import {
   SparqlJson,
 } from 'hslayers-ng';
 
+import env from '../env.config.json';
 import hr_mappings from './data/human-readable-names.json';
 import i18n from './data/translations.json';
 import ms from './data/map-symbols.json';
@@ -48,6 +49,7 @@ export class AppComponent {
     this.hsConfig.update({
       useProxy: false,
       assetsPath: 'assets/hslayers-ng',
+      geonamesUser: env.geonamesUser ?? '',
       proxyPrefix: window.location.hostname.includes('localhost')
         ? `${window.location.protocol}//${window.location.hostname}:8085/`
         : '/proxy/',
