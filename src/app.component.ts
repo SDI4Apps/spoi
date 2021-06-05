@@ -22,6 +22,7 @@ import env from '../env.config.json';
 import hr_mappings from './data/human-readable-names.json';
 import i18n from './data/translations.json';
 import ms from './data/map-symbols.json';
+import spoiConfig from '../spoi.config.json';
 import {SpoiPrettyInfopanelComponent} from './pretty-info-panel/pretty-infopanel.component';
 
 //proj4.defs('EPSG:5514', '+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +units=m +no_defs');
@@ -218,10 +219,10 @@ export class AppComponent {
    * */
   private getSpoiLayers(): VectorLayer[] {
     const popUpConfig = {
-      attributes: Object.entries(hr_mappings.properties).map((entry) => {
+      attributes: spoiConfig.attributesForPopUp.map((attr) => {
         return {
-          attribute: entry[0],
-          label: entry[1],
+          attribute: attr,
+          label: hr_mappings.properties[attr],
           displayFunction: this.spoiDisplayFunction,
         };
       }),
