@@ -1,0 +1,24 @@
+{
+  "attributesForPopUp": [
+    "http://www.w3.org/2000/01/rdf-schema#label",
+    "http://www.sdi4apps.eu/poi/#mainCategory",
+    "http://www.opengis.net/ont/geosparql#sfWithin",
+    "http://purl.org/dc/elements/1.1/source"
+  ],
+  "primaryAttributes": [
+    "http://xmlns.com/foaf/0.1/homepage",
+    "http://xmlns.com/foaf/0.1/mbox",
+    "http://xmlns.com/foaf/0.1/phone",
+    "http://www.w3.org/ns/locnfullAddress",
+    "http://www.openvoc.eu/poi#cuisine",
+    "http://www.opengis.net/ont/geosparql#sfWithin"
+  ],
+  "advancedAttributes": [],
+  "metadataAttributes": [
+    "http://purl.org/dc/terms/1.1/created",
+    "http://purl.org/dc/elements/1.1/identifier",
+    "http://purl.org/dc/elements/1.1/publisher",
+    "http://purl.org/dc/elements/1.1/rights",
+    "http://purl.org/dc/elements/1.1/source"
+  ]
+}
