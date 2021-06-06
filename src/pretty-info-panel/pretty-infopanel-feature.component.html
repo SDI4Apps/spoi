@@ -1,9 +1,29 @@
 <div class="container-fluid">
   <div class="m-2"><h2>{{feature.name}}</h2></div>
-  <span class="text-secondary float-right">{{'INFOPANEL.category' | translate}}&nbsp;{{feature.layer}}</span>
-  <table>
-    <tr *ngFor="let attr of feature.attributes">
-      <td>{{prettyAttrName(attr.name)}}</td><td>{{prettyAttrValue(attr.value)}}</td>
+  <hr>
+  <div class="text-secondary text-right">{{'INFOPANEL.category' | translate}}&nbsp;{{feature.layer}}</div>
+  <table class="m-2 w-100">
+    <tr><th class="pt-2 text-info">Properties</th></tr>
+    <tr *ngFor="let primary of primaryAttributes">
+      <ng-container *ngIf="hasValue(primary)">
+        <td class="text-dark">{{prettyAttrName(primary)}}</td>
+        <td class="text-secondary">{{prettyAttrValue(primary)}}</td>
+      </ng-container>
+    </tr>
+    <tr *ngIf="!showAdvanced"><td class="pt-2"><button (click)="toggleAdvanced()" class="btn btn-link btn-sm">more...</button></td></tr>
+    <tr *ngFor="let advanced of advancedAttributes">
+      <ng-container *ngIf="hasValue(advanced)">
+        <td class="text-dark">{{prettyAttrName(advanced)}}</td>
+        <td class="text-secondary">{{prettyAttrValue(advanced)}}</td>
+      </ng-container>
+    </tr>
+    <tr *ngIf="showAdvanced"><td class="pt-2"><button (click)="toggleAdvanced()" class="btn btn-link btn-sm">less...</button></td></tr>
+    <tr><th class="pt-2 text-info">Metadata</th></tr>
+    <tr *ngFor="let meta of metadataAttributes">
+      <ng-container *ngIf="hasValue(meta)">
+        <td class="text-dark">{{prettyAttrName(meta)}}</td>
+        <td class="text-secondary">{{prettyAttrValue(meta)}}</td>
+      </ng-container>
     </tr>
   </table>
 </div>
