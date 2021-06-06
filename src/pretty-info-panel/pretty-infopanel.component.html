@@ -10,5 +10,8 @@
   <div *ngIf="hsQueryBaseService.data.features.length > 0" class="card-body">
     <spoi-pretty-infopanel-feature *ngFor="let feature of hsQueryBaseService.data.features" [feature]="feature">
     </spoi-pretty-infopanel-feature>
+    <div class="text-right">
+      <span class="text-secondary small">Found a mistake? <a href="mailto:jan.macura@wirelessinfo.cz">Let us know!</a></span>
+    </div>
   </div>
 </div>

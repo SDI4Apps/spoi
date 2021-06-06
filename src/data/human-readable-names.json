@@ -15,7 +15,11 @@
     "http://www.w3.org/2000/01/rdf-schema#label": "title",
     "http://www.sdi4apps.eu/poi/#mainCategory": "category",
     "http://www.opengis.net/ont/geosparql#sfWithin": "within",
-    "http://purl.org/dc/elements/1.1/source": "source"
+    "http://purl.org/dc/elements/1.1/source": "source",
+    "http://purl.org/dc/terms/1.1/created": "date created",
+    "http://purl.org/dc/elements/1.1/identifier": "ID",
+    "http://purl.org/dc/elements/1.1/publisher": "publisher",
+    "http://purl.org/dc/elements/1.1/rights": "copyright"
 
   },
   "http://www.opengis.net/ont/geosparql#sfWithin": {
