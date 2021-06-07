@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import hr_mappings from '../data/human-readable-names.json';
+import mapSymbols from '../data/map-symbols.json';
 import spoiConfig from '../../spoi.config.json';
 import {SpoiPrettyInfopanelService} from './pretty-infopanel.service';
 
@@ -13,12 +14,14 @@ export class SpoiPrettyInfopanelFeatureComponent {
   primaryAttributes: Array<string>;
   advancedAttributes: Array<string>;
   metadataAttributes: Array<string>;
+  featureColors;
   showAdvanced = false;
 
   constructor(public prettyInfopanelService: SpoiPrettyInfopanelService) {
     this.primaryAttributes = spoiConfig.primaryAttributes;
     this.advancedAttributes = spoiConfig.advancedAttributes;
     this.metadataAttributes = spoiConfig.metadataAttributes;
+    this.featureColors = mapSymbols.mapColors;
   }
 
   prettyAttrName(name: string): string {
@@ -44,5 +47,11 @@ export class SpoiPrettyInfopanelFeatureComponent {
 
   toggleAdvanced(): void {
     this.showAdvanced = !this.showAdvanced;
+  }
+
+  getFeatureColor(category: string): string {
+    return `2px solid ${
+      this.featureColors[category.toLowerCase().replace(' ', '_')]
+    }`;
   }
 }
