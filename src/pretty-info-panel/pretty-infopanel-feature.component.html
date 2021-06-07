@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="m-2"><h2>{{feature.name}}</h2></div>
-  <hr>
+  <hr [ngStyle]="{'border-top': getFeatureColor(feature.layer)}">
   <div class="text-secondary text-right">{{'INFOPANEL.category' | translate}}&nbsp;{{feature.layer}}</div>
   <table class="m-2 w-100">
     <tr><th class="pt-2 text-info">Properties</th></tr>
