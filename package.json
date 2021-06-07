@@ -54,7 +54,7 @@
     "eslint-config-openlayers": "~14.0.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-tsdoc": "^0.2.14",
-    "ng-packagr": "^9.1.5",
+    "ng-packagr": "^10.1.1",
     "pm2": "^3.5.2",
     "typescript": "^3.8.3"
   },
