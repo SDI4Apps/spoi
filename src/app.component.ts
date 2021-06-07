@@ -258,6 +258,7 @@ export class AppComponent {
             radius: 5,
           }),
         }),
+        minZoom: 14,
         visible: false,
         cluster: true,
         editor: {editable: false},
@@ -300,6 +301,9 @@ export class AppComponent {
           }),
           style: this.getCategoryStyle(category.split('#')[1]),
           visible: false,
+          minZoom: 10,
+          editor: {editable: false},
+          editable: false,
           path: 'Popular Categories',
           popUp: popUpConfig,
         })
