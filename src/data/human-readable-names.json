@@ -19,7 +19,9 @@
     "http://purl.org/dc/terms/1.1/created": "date created",
     "http://purl.org/dc/elements/1.1/identifier": "ID",
     "http://purl.org/dc/elements/1.1/publisher": "publisher",
-    "http://purl.org/dc/elements/1.1/rights": "copyright"
+    "http://purl.org/dc/elements/1.1/rights": "copyright",
+    "http://xmlns.com/foaf/0.1/homepage": "homepage",
+    "http://www.openvoc.eu/poi#cuisine": "cuisine"
 
   },
   "http://www.opengis.net/ont/geosparql#sfWithin": {
