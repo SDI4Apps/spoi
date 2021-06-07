@@ -7,14 +7,20 @@
     <tr *ngFor="let primary of primaryAttributes">
       <ng-container *ngIf="hasValue(primary)">
         <td class="text-dark">{{prettyAttrName(primary)}}</td>
-        <td class="text-secondary">{{prettyAttrValue(primary)}}</td>
+        <td class="text-secondary">
+          <a *ngIf="isLink(primary)" [href]="getValue(primary)" class="link-secondary">{{prettyAttrValue(primary)}}</a>
+          <span *ngIf="!isLink(primary)">{{prettyAttrValue(primary)}}</span>
+        </td>
       </ng-container>
     </tr>
     <tr *ngIf="!showAdvanced"><td class="pt-2"><button (click)="toggleAdvanced()" class="btn btn-link btn-sm">more...</button></td></tr>
     <tr *ngFor="let advanced of advancedAttributes">
       <ng-container *ngIf="hasValue(advanced)">
         <td class="text-dark">{{prettyAttrName(advanced)}}</td>
-        <td class="text-secondary">{{prettyAttrValue(advanced)}}</td>
+        <td class="text-secondary">
+          <a *ngIf="isLink(advanced)" [href]="getValue(advanced)" class="link-secondary">{{prettyAttrValue(advanced)}}</a>
+          <span *ngIf="!isLink(advanced)">{{prettyAttrValue(advanced)}}</span>
+        </td>
       </ng-container>
     </tr>
     <tr *ngIf="showAdvanced"><td class="pt-2"><button (click)="toggleAdvanced()" class="btn btn-link btn-sm">less...</button></td></tr>
@@ -22,7 +28,10 @@
     <tr *ngFor="let meta of metadataAttributes">
       <ng-container *ngIf="hasValue(meta)">
         <td class="text-dark">{{prettyAttrName(meta)}}</td>
-        <td class="text-secondary">{{prettyAttrValue(meta)}}</td>
+        <td class="text-secondary">
+          <a *ngIf="isLink(meta)" [href]="getValue(meta)" class="link-secondary">{{prettyAttrValue(meta)}}</a>
+          <span *ngIf="!isLink(meta)">{{prettyAttrValue(meta)}}</span>
+        </td>
       </ng-container>
     </tr>
   </table>

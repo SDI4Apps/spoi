@@ -32,9 +32,7 @@ export class SpoiPrettyInfopanelFeatureComponent {
   }
 
   prettyAttrValue(attribute: string): string {
-    const value = this.feature.attributes.find(
-      (attr) => attr.name === attribute
-    ).value;
+    const value = this.getValue(attribute);
     if (value.includes('#')) {
       return value.split('#')[1];
     }
@@ -53,5 +51,21 @@ export class SpoiPrettyInfopanelFeatureComponent {
     return `2px solid ${
       this.featureColors[category.toLowerCase().replace(' ', '_')]
     }`;
+  }
+
+  isLink(attribute: string): boolean {
+    const val = this.getValue(attribute);
+    return (
+      val.startsWith('http') ||
+      val.startsWith('www') ||
+      val.includes('.cz') ||
+      val.includes('.com') ||
+      val.includes('.eu')
+    );
+  }
+
+  getValue(attribute: string): string {
+    return this.feature.attributes.find((attr) => attr.name === attribute)
+      .value;
   }
 }
