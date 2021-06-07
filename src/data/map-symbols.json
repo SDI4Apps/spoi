@@ -11,5 +11,17 @@
     "supermarket": "symbols/supermarket.png",
     "information": "symbols/information.png",
     "camp_site": "symbols/camp_site.png"
+  },
+  "mapColors": {
+    "bank": "rgb(255, 153, 0)",
+    "atm": "rgb(255, 153, 0)",
+    "cafe": "rgb(0, 230, 0)",
+    "fast_food": "rgb(0, 230, 0)",
+    "pub": "rgb(0, 230, 0)",
+    "restaurant": "rgb(0, 230, 0)",
+    "hotel": "rgb(230, 0, 172)",
+    "supermarket": "rgb(255, 153, 0)",
+    "information": "rgb(255, 153, 0)",
+    "camp_site": "rgb(230, 0, 172)"
   }
 }
