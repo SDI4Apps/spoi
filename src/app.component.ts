@@ -50,7 +50,7 @@ export class AppComponent {
     this.hsConfig.update({
       useProxy: false,
       assetsPath: 'assets/hslayers-ng',
-      geonamesUser: env?.geonamesUser ?? '',
+      geonamesUser: (env as any)?.geonamesUser ?? '',
       proxyPrefix: window.location.hostname.includes('localhost')
         ? `${window.location.protocol}//${window.location.hostname}:8085/`
         : '/proxy/',
