@@ -11,4 +11,4 @@ dist
 *.bat
 *.cmd
 /.vs
-env.config.js
+env.config.json
