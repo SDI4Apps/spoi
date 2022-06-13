@@ -4,10 +4,11 @@
   "description": "Map of Smart Points of Interest",
   "main": "dist/index.html",
   "scripts": {
-    "start": "node_modules/.bin/pm2 --no-daemon start ecosystem.config.js",
-    "start-dev": "ng serve --aot --disable-host-check",
     "build": "ng build --prod",
-    "build-dev": "ng build --aot"
+    "build-dev": "ng build --aot",
+    "dev": "ng serve --aot --disable-host-check",
+    "start": "node_modules/.bin/pm2 --no-daemon start ecosystem.config.js",
+    "start-dev": "npm run dev"
   },
   "dependencies": {
     "@angular/cdk": "^11.2.13",
