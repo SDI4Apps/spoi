@@ -22,6 +22,7 @@ export class SpoiPrettyInfopanelFeatureComponent {
     this.advancedAttributes = spoiConfig.advancedAttributes;
     this.metadataAttributes = spoiConfig.metadataAttributes;
     this.featureColors = mapSymbols.mapColors;
+    console.log(this.primaryAttributes, this.advancedAttributes, this.metadataAttributes);
   }
 
   prettyAttrName(name: string): string {

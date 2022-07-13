@@ -13,6 +13,7 @@ import {SpoiPrettyInfopanelService} from './pretty-infopanel.service';
   templateUrl: 'pretty-infopanel.component.html',
 })
 export class SpoiPrettyInfopanelComponent implements HsPanelComponent, OnInit {
+  name: string;
   data: any;
   viewRef: ViewRef;
 
@@ -21,6 +22,7 @@ export class SpoiPrettyInfopanelComponent implements HsPanelComponent, OnInit {
     public hsLayoutService: HsLayoutService,
     public hsQueryBaseService: HsQueryBaseService
   ) {
+    console.log('init', hsQueryBaseService.data.features);
     //this.data = this.hsQueryBaseService.data;
   }
 

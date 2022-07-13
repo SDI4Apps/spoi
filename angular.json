@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demeter": {
+    "spoi": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "",
@@ -15,27 +15,48 @@
       "prefix": "",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
+            "preserveSymlinks": true,
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "sourceMap": true,
+            "vendorChunk": true,
+            "allowedCommonJsDependencies": [
+              "xml-utils/find-tags-by-name",
+              "lru-cache",
+              "pbf",
+              "queue",
+              "xml-js",
+              "geostyler-legend",
+              "ol-popup",
+              "geostyler-openlayers-parser",
+              "geostyler-sld-parser"
+            ],
             "assets": [
               "src/favicon.ico", 
               "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/data",
+                "output": "./assets"
+              },
               {
                 "glob": "**/*",
                 "input": "./node_modules/hslayers-ng/src/assets",
                 "output": "./assets/hslayers-ng/"
               }
             ],
-            "preserveSymlinks": true,
             "styles": [
+              "./node_modules/hslayers-ng/css/hslayers-ng.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "customWebpackConfig": {
+              "path": "custom-webpack.config.js"
+            }
           },
           "configurations": {
             "production": {
@@ -51,7 +72,6 @@
               "namedChunks": false,
               "statsJson": true,
               "extractLicenses": true,
-              "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
@@ -71,18 +91,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demeter:build"
+            "browserTarget": "spoi:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "demeter:build:production"
+              "browserTarget": "spoi:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demeter:build"
+            "browserTarget": "spoi:build"
           }
         },
         "test": {
@@ -104,18 +124,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "demeter:serve"
+            "devServerTarget": "spoi:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "demeter:serve:production"
+              "devServerTarget": "spoi:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "demeter",
+  "defaultProject": "spoi",
   "cli": {
     "analytics": false
   }

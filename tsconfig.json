@@ -1,24 +1,27 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "declaration": false,
     "downlevelIteration": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
+    "lib": ["es2018", "dom"],
     "module": "es2020",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "lib": ["es2018", "dom"],
-    "sourceMap": true,
-    "esModuleInterop": true,
     "resolveJsonModule":true,
+    "sourceMap": true,
+    "target": "es2015",
   },
   "paths": {
-    "hslayers-ng": [
-      "./node_modules/hslayers-ng/src/public-api.ts"
-    ]
+    "@angular/*": [ "node_modules/@angular/*" ],
+    "rxjs/*": [ "node_modules/rxjs/*" ],
+    "ol/*": ["node_modules/ol/*"],
+    "hslayers-ng/*": ["node_modules/hslayers/*"],
+    "@ngx-translate/*": ["node_modules/@ngx-translate/*"],
+    "cesium/*": ["node_modules/cesium/*"],
   },
   "angularCompilerOptions": {
     "enableResourceInlining": true,

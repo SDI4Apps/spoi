@@ -5,10 +5,11 @@ bundle.min.js.map
 static
 build
 dist
+.angular
 .vscode
+/.vs
 /index.html
 .tern-project
 *.bat
 *.cmd
-/.vs
 env.config.json

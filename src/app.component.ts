@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 
 import {Circle, Fill, Icon, Stroke, Style} from 'ol/style';
-import {OSM} from 'ol/source';
+import {Geometry} from 'ol/geom';
+import {OSM, Vector as VectorSource} from 'ol/source';
 import {Tile} from 'ol/layer';
 import {Vector as VectorLayer} from 'ol/layer';
 import {View} from 'ol';
@@ -107,11 +108,9 @@ export class AppComponent {
     });
   }
 
-  private getCategoryStyle(category: string): Style | void {
-    const symbolSrc = this.hsUtilsService.resolveEsModule(
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      require('../img/' + this.symbols[category])
-    );
+  private getCategoryStyle(category: string): Style | undefined {
+    const symbolSrc = './assets/img/' + this.symbols[category];
+
     //console.log(`symbolSrc: ${symbolSrc}`)
     if (symbolSrc === undefined) {
       console.warn(`No symbol found for category: ${symbolSrc}!`);
@@ -132,72 +131,86 @@ export class AppComponent {
     return [
       // BACKGROUNDS
       new Tile({
+        properties: {
+          title: 'OpenStreetMap',
+          base: true,
+          path: 'Roads',
+        },
         source: new OSM(),
-        title: 'OpenStreetMap',
-        base: true,
         visible: true,
-        path: 'Roads',
       }),
       new Tile({
-        title: 'OpenCycleMap',
+        properties: {
+          title: 'OpenCycleMap',
+          base: true,
+          path: 'Roads',
+        },
         visible: false,
-        base: true,
         source: new OSM({
           url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
         }),
-        path: 'Roads',
       }),
       new Tile({
-        title: 'MTBMap',
+        properties: {
+          title: 'MTBMap',
+          base: true,
+          path: 'Roads',
+        },
         visible: false,
-        base: true,
         source: new OSM({
           // For some reason XYZ() does not work here
           url: 'http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
         }),
-        path: 'Roads',
       }),
       new Tile({
-        title: 'OwnTiles',
+        properties: {
+          title: 'OwnTiles',
+          base: true,
+          path: 'Roads',
+        },
         visible: false,
-        base: true,
         source: new OSM({
           // For some reason XYZ() does not work here
           url: 'http://ct37.sdi4apps.eu/map/{z}/{x}/{y}.png',
         }),
-        path: 'Roads',
       }),
 
       // WEATHER
       new Tile({
-        title: 'OpenWeatherMap cloud cover',
+        properties: {
+          title: 'OpenWeatherMap cloud cover',
+          path: 'Weather info',
+        },
         source: new OSM({
           // For some reason XYZ() does not work here
           url: 'http://{a-c}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa',
         }),
         visible: false,
         opacity: 0.7,
-        path: 'Weather info',
       }),
       new Tile({
-        title: 'OpenWeatherMap precipitation',
+        properties: {
+          title: 'OpenWeatherMap precipitation',
+          path: 'Weather info',
+        },
         source: new OSM({
           // For some reason XYZ() does not work here
           url: 'http://{a-c}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa',
         }),
         visible: false,
         opacity: 0.7,
-        path: 'Weather info',
       }),
       new Tile({
-        title: 'OpenWeatherMap temperature',
+        properties: {
+          title: 'OpenWeatherMap temperature',
+          path: 'Weather info',
+        },
         source: new OSM({
           // For some reason XYZ() does not work here
           url: 'http://{a-c}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid=13b627424cd072290defed4216e92baa',
         }),
         visible: false,
         opacity: 0.7,
-        path: 'Weather info',
       }),
     ];
   }
@@ -217,7 +230,7 @@ export class AppComponent {
    *
    * @returns An array of VectorLayers containig SPOI data reference.
    * */
-  private getSpoiLayers(): VectorLayer[] {
+  private getSpoiLayers(): VectorLayer<VectorSource<Geometry>>[] {
     const popUpConfig = {
       attributes: spoiConfig.attributesForPopUp.map((attr) => {
         return {
@@ -227,11 +240,17 @@ export class AppComponent {
         };
       }),
     };
-    const layers: VectorLayer[] = [];
+    const layers: VectorLayer<VectorSource<Geometry>>[] = [];
 
     layers.push(
       new VectorLayer({
-        title: 'All POIs (slow)',
+        properties: {
+          title: 'All POIs (slow)',
+          cluster: true,
+          editor: {editable: false},
+          editable: false,
+          popUp: popUpConfig,
+        },
         source: new SparqlJson({
           geom_attribute: '?geom',
           url:
@@ -260,17 +279,19 @@ export class AppComponent {
         }),
         minZoom: 14,
         visible: false,
-        cluster: true,
-        editor: {editable: false},
-        editable: false,
-        popUp: popUpConfig,
       })
     );
 
     for (const category in this.popularCategories) {
       layers.push(
         new VectorLayer({
-          title: this.popularCategories[category],
+          properties: {
+            title: this.popularCategories[category],
+            editor: {editable: false},
+            editable: false,
+            path: 'Popular Categories',
+            popUp: popUpConfig,
+          },
           source: new SparqlJson({
             geom_attribute: '?geom',
             url:
@@ -302,10 +323,6 @@ export class AppComponent {
           style: this.getCategoryStyle(category.split('#')[1]),
           visible: false,
           minZoom: 10,
-          editor: {editable: false},
-          editable: false,
-          path: 'Popular Categories',
-          popUp: popUpConfig,
         })
       );
     }
