@@ -15,6 +15,7 @@
       "prefix": "",
       "architect": {
         "build": {
+          "defaultConfiguration": "production",
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist",
@@ -59,6 +60,14 @@
             }
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -90,12 +99,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "defaultConfiguration": "development",
           "options": {
             "browserTarget": "spoi:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "spoi:build:production"
+            },
+            "development": {
+              "browserTarget": "spoi:build:development"
             }
           }
         },
